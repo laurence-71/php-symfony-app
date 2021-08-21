@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin
+{% endblock %}
+
+{% block body %}
+	{% for message in app.flashes('message') %}
+		<div class="alert alert-success" role"alert">
+			{{message}}
+		</div>
+	{% endfor %}
+
+	<div class="container">
+		<h1>
+			Hello
+			{{app.user.firstName}}</h1>
+		<h2>Users list</h2>
+		<table class="table table-bordered table-striped">
+			<thead>
+				<th>Id</th>
+				<th>Last Name</th>
+				<th>First Name</th>
+				<th>Email</th>
+				<th>Role</th>
+				<th>Edit</th>
+				<th>Delete</th>
+
+			</thead>
+			<tbody>
+				{% for user in users %}
+					<tr>
+						<td>{{user.id}}</td>
+						<td>{{user.lastName}}</td>
+						<td>{{user.firstName}}</td>
+						<td>{{user.email}}</td>
+						<td>
+							{% for role in user.roles %}
+								{% if role is same as("ROLE_USER") %}
+									User
+								{% elseif role is same as("ROLE_MANAGER")  %}
+									Manager
+								{% elseif role is same as("ROLE_ADMIN" )%}
+									Admin
+								{% endif %}
+							{% endfor %}
+						</td>
+						{% if user.id !=1 %}
+							<td>
+								<a class="btn edit" href="{{path('admin_edit_user',{'id':user.id})}}">
+									<i class="bi bi-pencil"></i>
+								</a>
+							</td>
+							<td>
+								{{include('admin/_delete_form.html.twig')}}
+							</td>
+						{% else %}
+							<td colspan="2">
+								<span class="btn delete"><strong>You're not allowed to change the admin rights</strong></span>
+							</td>
+						{% endif %}
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="7">Nobody registered yet</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<a class="btn create" href="{{path('user_index')}}">
+			<i class="bi bi-chevron-left">Home</i>
+		</a>
+		<a class="btn create" href="{{path('registration')}}">Create a new user</a>
+	</div>
+{% endblock %}

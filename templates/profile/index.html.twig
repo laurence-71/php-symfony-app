@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+<div class="container">
+		<h1>Profile of
+			{{ app.user.firstName }}</h1>
+		{% for  message in app.flashes('message') %}
+			<div class="alert alert-success" role="alert">
+				{{ message }}
+			</div>
+		{% endfor %}
+       
+
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th scope="col">Last Name</th>
+					<th scope="col">First Name</th>
+					<th scope="col">Email</th>
+					<th scope="col">Edit profile</th>
+					<th scope="col">Edit password</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ app.user.lastName }}</td>
+					<td>{{app.user.firstName}}</td>
+					<td>{{ app.user.email }}</td>
+					<td>
+						<a href="{{path('edit_profile',{'id': app.user.id})}}" class="btn edit">
+							<i class="bi bi-pencil"></i>
+						</a>
+					</td>
+					<td>
+						<a href="{{path('edit_password',{'id':app.user.id})}}" class="btn edit">
+							<i class="bi bi-pencil"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div>
+			<a href="{{ path('user_index') }}" class="btn create">
+				<i class="bi bi-chevron-left">
+					Home</i>
+			</a>
+		</div>
+	</div>
+</div>
+{% endblock %}

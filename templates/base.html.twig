@@ -1,19 +1,115 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		{# Run `composer require symfony/webpack-encore-bundle`
+		           and uncomment the following Encore helpers to start using Symfony UX #}
+		{% block stylesheets %}
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+			<link rel="stylesheet" href="./../../../assets/app.css" media="screen"/>
+			<link
+			rel="stylesheet" href="" media="print"/>
+			<link rel="apple-touch-icon" sizes="180x180" href="./../../../assets/ressources/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./../../../assets/ressources/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./../../../assets/ressources/favicon/favicon-16x16.png">
+<link rel="manifest" href="./../../../assets/ressources/favicon/site.webmanifest">
+<link rel="mask-icon" href="./../../../assets/ressources/favicon/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+		{#{{ encore_entry_link_tags('app') }}#}
+		{% endblock %}
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+
+	</head>
+	<body>
+		<div class="container-nav">
+			<nav class="navbar navbar-expand-lg ">
+				<div class="container-fluid">
+					<div><img class="img" src="./../../../assets/logo.jpg" alt="logo"><div>
+					{% if is_granted("ROLE_ADMIN") %}
+						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						<div class="collapse navbar-collapse" id="navbarNavDropdown">
+							<ul class="navbar-nav">
+								<li class="nav-item">
+									<a class="nav-link active" aria-current="page" href="{{path('admin_users')}}">Users List</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="{{path('user_index')}}">Home</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="{{path('profile_index')}}">Profile</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="{{path('app_logout')}}">Logout</a>
+								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										Dropdown link
+									</a>
+									<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+										<li>
+											<a class="dropdown-item" href="#">Action</a>
+										</li>
+										<li>
+											<a class="dropdown-item" href="#">Another action</a>
+										</li>
+										<li>
+											<a class="dropdown-item" href="#">Something else here</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+
+					{% elseif is_granted("ROLE_USER") %}
+						<button class="navbar-toggler toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						<div class="collapse navbar-collapse" id="navbarNavDropdown">
+							<ul class="navbar-nav">
+								<li class="nav-item">
+									<a class="nav-link active" aria-current="page" href="{{path('user_index')}}">Home</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="{{path('profile_index')}}">Profile</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="{{path('app_logout')}}">Logout</a>
+								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										Dropdown link
+									</a>
+									<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+										<li>
+											<a class="dropdown-item" href="#">Action</a>
+										</li>
+										<li>
+											<a class="dropdown-item" href="#">Another action</a>
+										</li>
+										<li>
+											<a class="dropdown-item" href="#">Something else here</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					{% endif %}
+				</div>
+			</nav>
+		</div>
+		{% block body %}{% endblock %}
+		{% block javascripts %}
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+			{#{{ encore_entry_script_tags('app') }}#}
+
+		{% endblock %}
+	</body>
 </html>

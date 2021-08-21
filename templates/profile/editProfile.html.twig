@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+{% block title %}Edit profile{% endblock %}
+{% block body %}
+<div class="container">
+
+<h1>Edit the profile of {{app.user.firstName}}</h1>
+{% form_theme formEditProfile 'bootstrap_4_layout.html.twig' %}
+{{form_start(formEditProfile)}}
+{{form_widget(formEditProfile)}}
+
+<button type="submit" class="btn create">Update</button>
+<button class="btn create" href="{{path("profile_index")}}"><i class="bi bi-chevron-left">Home</i></button>
+
+{{form_end(formEditProfile)}}
+
+</div>
+{% endblock %}
