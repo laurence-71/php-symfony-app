@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bike{% endblock %}
+
+{% block body %}
+    <h1>Bike</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ bike.id }}</td>
+            </tr>
+            <tr>
+                <th>SerialNumber</th>
+                <td>{{ bike.serialNumber }}</td>
+            </tr>
+            <tr>
+                <th>Brand</th>
+                <td>{{ bike.brand }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ bike.category }}</td>
+            </tr>
+            <tr>
+                <th>Color</th>
+                <td>{{ bike.color }}</td>
+            </tr>
+            <tr>
+                <th>Size</th>
+                <td>{{ bike.size }}</td>
+            </tr>
+            <tr>
+                <th>Weight</th>
+                <td>{{ bike.weight }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('bike_index') }}">back to list</a>
+
+    <a href="{{ path('bike_edit', {'id': bike.id}) }}">edit</a>
+
+    {{ include('bike/_delete_form.html.twig') }}
+{% endblock %}

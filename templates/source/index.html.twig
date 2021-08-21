@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Source index{% endblock %}
+
+{% block body %}
+    <h1>Source index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Origin</th>
+                <th>Purpose</th>
+                <th>DepositDate</th>
+                <th>Telephone</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Rgpd</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for source in sources %}
+            <tr>
+                <td>{{ source.id }}</td>
+                <td>{{ source.origin }}</td>
+                <td>{{ source.purpose }}</td>
+                <td>{{ source.depositDate ? source.depositDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ source.telephone }}</td>
+                <td>{{ source.email }}</td>
+                <td>{{ source.address }}</td>
+                <td>{{ source.rgpd ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('source_show', {'id': source.id}) }}">show</a>
+                    <a href="{{ path('source_edit', {'id': source.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('source_new') }}">Create new</a>
+{% endblock %}
