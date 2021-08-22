@@ -3,9 +3,12 @@
 {% block title %}New Operator{% endblock %}
 
 {% block body %}
+<div class="container-fluid list">
+{% form_theme formOperator 'bootstrap_4_layout.html.twig' %}
     <h1>Create new Operator</h1>
 
     {{ include('operator/_form.html.twig') }}
 
-    <a href="{{ path('operator_index') }}">back to list</a>
+    <a class="btn create" href="{{ path('operator_index') }}"><i class="bi bi-chevron-left">Back to list</i></a>
+    </div>
 {% endblock %}
