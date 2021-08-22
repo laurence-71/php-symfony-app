@@ -31,10 +31,10 @@ class OperationController extends AbstractController
     public function new(Request $request): Response
     {
         $operation = new Operation();
-        $form = $this->createForm(OperationType::class, $operation);
-        $form->handleRequest($request);
+        $formOperation = $this->createForm(OperationType::class, $operation);
+        $formOperation->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($formOperation->isSubmitted() && $formOperation->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($operation);
             $entityManager->flush();
@@ -44,7 +44,7 @@ class OperationController extends AbstractController
 
         return $this->renderForm('operation/new.html.twig', [
             'operation' => $operation,
-            'form' => $form,
+            'formOperation' => $formOperation,
         ]);
     }
 
@@ -63,10 +63,10 @@ class OperationController extends AbstractController
      */
     public function edit(Request $request, Operation $operation): Response
     {
-        $form = $this->createForm(OperationType::class, $operation);
-        $form->handleRequest($request);
+        $formOperation = $this->createForm(OperationType::class, $operation);
+        $formOperation->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($formOperation->isSubmitted() && $formOperation->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('operation_index', [], Response::HTTP_SEE_OTHER);
@@ -74,7 +74,7 @@ class OperationController extends AbstractController
 
         return $this->renderForm('operation/edit.html.twig', [
             'operation' => $operation,
-            'form' => $form,
+            'formOperation' => $formOperation,
         ]);
     }
 

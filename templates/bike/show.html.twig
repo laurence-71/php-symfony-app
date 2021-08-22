@@ -3,16 +3,17 @@
 {% block title %}Bike{% endblock %}
 
 {% block body %}
+<div class="container">
     <h1>Bike</h1>
 
-    <table class="table">
+    <table class="table table-borederd table-stripped">
         <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ bike.id }}</td>
             </tr>
             <tr>
-                <th>SerialNumber</th>
+                <th>Serial Number</th>
                 <td>{{ bike.serialNumber }}</td>
             </tr>
             <tr>
@@ -38,9 +39,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('bike_index') }}">back to list</a>
+    <a class="btn create" href="{{ path('bike_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
 
-    <a href="{{ path('bike_edit', {'id': bike.id}) }}">edit</a>
+    <a class="btn edit" href="{{ path('bike_edit', {'id': bike.id}) }}"><i class="bi bi-pencil"> Edit</i></a>
 
     {{ include('bike/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

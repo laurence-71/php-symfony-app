@@ -1,22 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Source index{% endblock %}
+{% block title %}Sources {% endblock %}
 
 {% block body %}
-    <h1>Source index</h1>
+<div class="container">
+    <h1>Sources List</h1>
 
-    <table class="table">
+    <table class="table table-bordered table-stripped">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Origin</th>
                 <th>Purpose</th>
-                <th>DepositDate</th>
-                <th>Telephone</th>
+                <th>Deposit Date</th>
+                <th>Phone Number</th>
                 <th>Email</th>
                 <th>Address</th>
                 <th>Rgpd</th>
-                <th>actions</th>
+                <th>Show</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -25,23 +27,37 @@
                 <td>{{ source.id }}</td>
                 <td>{{ source.origin }}</td>
                 <td>{{ source.purpose }}</td>
-                <td>{{ source.depositDate ? source.depositDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ source.depositDate ? source.depositDate|date('Y-m-d H:i') : '' }}</td>
                 <td>{{ source.telephone }}</td>
                 <td>{{ source.email }}</td>
                 <td>{{ source.address }}</td>
                 <td>{{ source.rgpd ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('source_show', {'id': source.id}) }}">show</a>
-                    <a href="{{ path('source_edit', {'id': source.id}) }}">edit</a>
+                    <a class="btn show" href="{{ path('source_show', {'id': source.id}) }}"><i class="bi bi-info-square"></i></a>
+                    </td>
+                    <td>
+                    {% if is_granted("ROLE_MANAGER") %}
+                       
+                       
+                         <a class="btn edit" href="{{ path('source_edit', {'id': source.id}) }}"><i class="bi bi-pencil"></i></a>
+                       
+                          {{ include('source/_delete_form.html.twig') }}
+                    
+                   
+                    {% else %}
+                        <span col="2">Unauthorized access</span>
+                    {% endif %}
+                   
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="10">No records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('source_new') }}">Create new</a>
+    <a class="btn create" href="{{ path('source_new') }}">Create new</a>
+    </div>
 {% endblock %}

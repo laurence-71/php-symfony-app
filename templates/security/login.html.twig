@@ -5,10 +5,10 @@
 
 {% block body %}
 	<div class="container">
-		<div class="row">
-			<div class="col-md-10 ml-md-auto">
-				<div class="">
-					<div class="card bg-light mb-3 mt-5" style="width: 800px;">
+		<div class="row" >
+			<div class="col-md-10 ml-md-auto" style="margin-left:8%;" >
+				<div class="" >
+					<div class="card bg-light mb-3 mt-5" style="width: 100%;margin:auto; ">
 						<div class="card-body">
 							<form class="form-horizontal" role="form" method="post">
 								{% if error %}
@@ -51,7 +51,7 @@
 								    #}
 								<div class="form-group">
 									<div class="col-md-12">
-										<button class="btn btn-lg btn-primary" type="submit">
+										<button class="btn create" type="submit">
 											Sign in
 										</button>
 										<a class="btn create" href="{{ path('registration') }}">

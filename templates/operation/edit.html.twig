@@ -3,11 +3,14 @@
 {% block title %}Edit Operation{% endblock %}
 
 {% block body %}
+<div class="container">
+{% form_theme formOperation 'bootstrap_4_layout.html.twig' %}
     <h1>Edit Operation</h1>
 
     {{ include('operation/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('operation_index') }}">back to list</a>
+    <a class="btn create" href="{{ path('operation_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
 
     {{ include('operation/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

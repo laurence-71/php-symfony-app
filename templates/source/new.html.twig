@@ -3,9 +3,12 @@
 {% block title %}New Source{% endblock %}
 
 {% block body %}
+<div class="container">
+{% form_theme formSource 'bootstrap_4_layout.html.twig' %}
     <h1>Create new Source</h1>
 
     {{ include('source/_form.html.twig') }}
 
-    <a href="{{ path('source_index') }}">back to list</a>
+    <a class="btn create" href="{{ path('source_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
+    </div>
 {% endblock %}

@@ -31,10 +31,10 @@ class BikeController extends AbstractController
     public function new(Request $request): Response
     {
         $bike = new Bike();
-        $form = $this->createForm(BikeType::class, $bike);
-        $form->handleRequest($request);
+        $formBike = $this->createForm(BikeType::class, $bike);
+        $formBike->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($formBike->isSubmitted() && $formBike->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($bike);
             $entityManager->flush();
@@ -44,7 +44,7 @@ class BikeController extends AbstractController
 
         return $this->renderForm('bike/new.html.twig', [
             'bike' => $bike,
-            'form' => $form,
+            'formBike' => $formBike,
         ]);
     }
 
@@ -63,10 +63,10 @@ class BikeController extends AbstractController
      */
     public function edit(Request $request, Bike $bike): Response
     {
-        $form = $this->createForm(BikeType::class, $bike);
-        $form->handleRequest($request);
+        $formBike = $this->createForm(BikeType::class, $bike);
+        $formBike->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($formBike->isSubmitted() && $formBike->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('bike_index', [], Response::HTTP_SEE_OTHER);
@@ -74,7 +74,7 @@ class BikeController extends AbstractController
 
         return $this->renderForm('bike/edit.html.twig', [
             'bike' => $bike,
-            'form' => $form,
+            'formBike' => $formBike,
         ]);
     }
 

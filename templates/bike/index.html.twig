@@ -1,21 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bike index{% endblock %}
+{% block title %}Bikes{% endblock %}
 
 {% block body %}
-    <h1>Bike index</h1>
+<div class="container">
+    <h1>Bikes List</h1>
 
-    <table class="table">
+    <table class="table table-bordered table-stripped">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>SerialNumber</th>
+                <th>Serial Number</th>
                 <th>Brand</th>
                 <th>Category</th>
                 <th>Color</th>
                 <th>Size</th>
                 <th>Weight</th>
-                <th>actions</th>
+                <th>Show</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -29,17 +31,28 @@
                 <td>{{ bike.size }}</td>
                 <td>{{ bike.weight }}</td>
                 <td>
-                    <a href="{{ path('bike_show', {'id': bike.id}) }}">show</a>
-                    <a href="{{ path('bike_edit', {'id': bike.id}) }}">edit</a>
+                    <a class="btn show" href="{{ path('bike_show', {'id': bike.id}) }}"><i class="bi bi-info-square"></i></a>
+                    </td>
+                    <td>
+                    {% if is_granted("ROLE_MANAGER") %}
+                    <div>
+                         <a class="btn edit" href="{{ path('bike_edit', {'id': bike.id}) }}"><i class="bi bi-pencil"></i></a>
+                    </div>
+                     {{ include('bike/_delete_form.html.twig') }}
+                    {% else %}
+                        <span col="2">Unauthorized access</span>
+                    {% endif %}
+                   
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="9">No records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('bike_new') }}">Create new</a>
+    <a class="btn create" href="{{ path('bike_new') }}">Create new</a>
+    </div>
 {% endblock %}

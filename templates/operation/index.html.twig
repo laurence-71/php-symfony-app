@@ -1,16 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Operation index{% endblock %}
+{% block title %}Operations{% endblock %}
 
 {% block body %}
-    <h1>Operation index</h1>
+<div class="container">
+    <h1>Operations List</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>ReceptionDate</th>
-                <th>actions</th>
+                <th>Reception Date</th>
+                <th>Show</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -19,17 +21,28 @@
                 <td>{{ operation.id }}</td>
                 <td>{{ operation.receptionDate ? operation.receptionDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('operation_show', {'id': operation.id}) }}">show</a>
-                    <a href="{{ path('operation_edit', {'id': operation.id}) }}">edit</a>
+                    <a class="btn show" href="{{ path('operation_show', {'id': operation.id}) }}"><i class="bi bi-info-square"></i></a>
+                   </td>
+                   <td>
+                   {% if is_granted("ROLE_MANAGER") %}
+                   <div>
+                         <a class="btn edit" href="{{ path('operation_edit', {'id': operation.id}) }}"><i class="bi bi-pencil"></i></a>
+                   </div>
+                    {{ include('operation/_delete_form.html.twig') }}
+                   {% else %}
+                       <span col="2">Unauthorized access</span>
+                   {% endif %}
+                  
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="4">No records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('operation_new') }}">Create new</a>
+    <a class="btn create" href="{{ path('operation_new') }}">Create new</a>
+    </div>
 {% endblock %}

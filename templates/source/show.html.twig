@@ -3,9 +3,10 @@
 {% block title %}Source{% endblock %}
 
 {% block body %}
+<div class="container">
     <h1>Source</h1>
 
-    <table class="table">
+    <table class="table table-bordered table-stripped">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -24,7 +25,7 @@
                 <td>{{ source.depositDate ? source.depositDate|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Telephone</th>
+                <th>Phone Number</th>
                 <td>{{ source.telephone }}</td>
             </tr>
             <tr>
@@ -39,12 +40,24 @@
                 <th>Rgpd</th>
                 <td>{{ source.rgpd ? 'Yes' : 'No' }}</td>
             </tr>
+            <tr>
+                <th>Bikes</th>
+                <td>
+                <a class="btn create" href="#"><i class="bi bi-plus-square"> Add a bike</i></a>
+            </td>
+            </tr>
         </tbody>
     </table>
+<div class="row">
+<div class="col-sm">
+    <a class="btn create" href="{{ path('source_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
+</div>
+<div class="col-sm">
+  {{ include('source/_delete_form.html.twig') }}
+    <a class="btn edit" href="{{ path('source_edit', {'id': source.id}) }}"><i class="bi bi-pencil"> Edit</i></a>
 
-    <a href="{{ path('source_index') }}">back to list</a>
-
-    <a href="{{ path('source_edit', {'id': source.id}) }}">edit</a>
-
-    {{ include('source/_delete_form.html.twig') }}
+  
+    </div>
+    </div>
+    </div>
 {% endblock %}

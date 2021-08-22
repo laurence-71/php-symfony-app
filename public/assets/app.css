@@ -1,13 +1,26 @@
 body{
     height:100vh;
     width:100vw;
+    background-image: url('./fdVelo.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+   
+   
+}
+
+.container{
+    margin-top:2%;
+    border:rgb(73, 73, 77) solid 2px;
+   background-color:rgb(73, 73, 77);
+   border-radius: 10px;
 }
 
 .container-nav{
     width:100%;
-   height: 25%;
+   height: 20%;
     background-color: rgb(240, 182, 201);
     border:rgb(73, 73, 77) solid 2px;
+   
    
 }
 
@@ -25,12 +38,25 @@ ul{
 }
 
 .table{
-    border:black solid 2px;
+    border:rgb(73, 73, 77) solid 2px;
+    background-color: rgb(240, 182, 201);
+}
+
+label{
+    color:rgb(240,182,201);
+ 
+    font-weight: bold;
+}
+
+.form-control{
+    background-color:rgb(205,205,231) ;
+    border:rgb(73, 73, 77) solid 2px;
 }
 
 .btn{
     padding: auto;
-    border: 1px solid black;
+    margin: 5px;;
+    border: 1px solid rgb(73, 73, 77);
     text-align: center;
 }
 
@@ -40,34 +66,45 @@ ul{
 
 .edit {
     background-color: rgb(195, 235, 156);
+    float:right;
 }
 
 .delete {
     background-color: red;
-
+    float:right;
 }
 
 .show{
     background-color: rgb(134, 236, 236);
+    float:right;
 }
 
 h1{
     text-align: center;
     margin-top: 5%;
     font-size: 40px;
+    border:rgb(73, 73, 77) solid 2px;
+    border-radius: 15px;
+    background-color:rgb(240, 182, 201) ;
+   margin-left: 20px;
+   margin-right:20px;
+
+}
+
+h2{
+    color:rgb(205, 205, 231)
 }
 
 
 
 .img{
-    height:15%;
-    width: 15%;
+    height:14%;
+    width: 14%;
     border-radius: 50%;
     border:rgb(48, 41, 78) solid 2px;
-    float:left;
-    clear:none;
-   vertical-align: middle;
-    margin: 1%;
+   float:left;
+   margin-top: 1%;
+    margin-left: 1%;
 
   
 

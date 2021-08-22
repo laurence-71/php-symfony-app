@@ -31,10 +31,10 @@ class SourceController extends AbstractController
     public function new(Request $request): Response
     {
         $source = new Source();
-        $form = $this->createForm(SourceType::class, $source);
-        $form->handleRequest($request);
+        $formSource = $this->createForm(SourceType::class, $source);
+        $formSource->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($formSource->isSubmitted() && $formSource->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($source);
             $entityManager->flush();
@@ -44,7 +44,7 @@ class SourceController extends AbstractController
 
         return $this->renderForm('source/new.html.twig', [
             'source' => $source,
-            'form' => $form,
+            'formSource' => $formSource,
         ]);
     }
 
@@ -63,10 +63,10 @@ class SourceController extends AbstractController
      */
     public function edit(Request $request, Source $source): Response
     {
-        $form = $this->createForm(SourceType::class, $source);
-        $form->handleRequest($request);
+        $formSource = $this->createForm(SourceType::class, $source);
+        $formSource->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($formSource->isSubmitted() && $formSource->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('source_index', [], Response::HTTP_SEE_OTHER);
@@ -74,7 +74,7 @@ class SourceController extends AbstractController
 
         return $this->renderForm('source/edit.html.twig', [
             'source' => $source,
-            'form' => $form,
+            'formSource' => $formSource,
         ]);
     }
 
