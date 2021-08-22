@@ -3,6 +3,11 @@
 {% block title %}Source{% endblock %}
 
 {% block body %}
+{% for message in app.flashes('message') %}
+    <div class="alert alert-success" role"alert">
+    {{message}}
+    </div>
+{% endfor %}
 <div class="container-fluid list">
     <h1>Source</h1>
 

@@ -36,6 +36,17 @@
                 <th>Weight</th>
                 <td>{{ bike.weight }}</td>
             </tr>
+            <tr>
+            <th>Operations</th>
+                <td>
+                <div>Historic</div>
+                <div>
+                <a class="btn create" href="{{path('add_operation',{'id':bike.id})}}"><i class="bi bi-plus-square"> Add an operation</i></a>
+              </div>
+                </td>
+               
+           
+            </tr>
         </tbody>
     </table>
 <div class="row">

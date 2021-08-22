@@ -22,8 +22,15 @@ class BikeType extends AbstractType
                 'label'=>"Brand",
                 'required'=>false,
             ])
-            ->add('category',TextType::class,[
+            ->add('category',ChoiceType::class,[
                 'label'=>"Category",
+                'choices'=>[
+                    'Urban'=>'Urban',
+                    'Fitness'=>'Fitness',
+                    'AllTrack'=>'AllTrack',
+                     'VTT'=>'VTT',
+                    'DH'=>'DH',
+                ],
                 'required'=>false,
             ])
             ->add('color', TextType::class,[

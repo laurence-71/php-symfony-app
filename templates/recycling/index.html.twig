@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recycling index{% endblock %}
+
+{% block body %}
+    <h1>Recycling index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>RecyclingDate</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recycling in recyclings %}
+            <tr>
+                <td>{{ recycling.id }}</td>
+                <td>{{ recycling.recyclingDate ? recycling.recyclingDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('recycling_show', {'id': recycling.id}) }}">show</a>
+                    <a href="{{ path('recycling_edit', {'id': recycling.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('recycling_new') }}">Create new</a>
+{% endblock %}

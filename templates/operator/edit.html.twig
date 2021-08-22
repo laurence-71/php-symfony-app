@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Operator{% endblock %}
+
+{% block body %}
+    <h1>Edit Operator</h1>
+
+    {{ include('operator/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('operator_index') }}">back to list</a>
+
+    {{ include('operator/_delete_form.html.twig') }}
+{% endblock %}

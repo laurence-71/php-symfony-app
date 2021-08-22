@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Operator{% endblock %}
+
+{% block body %}
+    <h1>Create new Operator</h1>
+
+    {{ include('operator/_form.html.twig') }}
+
+    <a href="{{ path('operator_index') }}">back to list</a>
+{% endblock %}

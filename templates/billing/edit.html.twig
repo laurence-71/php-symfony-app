@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Billing{% endblock %}
+
+{% block body %}
+    <h1>Edit Billing</h1>
+
+    {{ include('billing/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('billing_index') }}">back to list</a>
+
+    {{ include('billing/_delete_form.html.twig') }}
+{% endblock %}

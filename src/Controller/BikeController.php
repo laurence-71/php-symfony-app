@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Bike;
+use App\Entity\Operation;
 use App\Form\BikeType;
+use App\Form\OperationType;
 use App\Repository\BikeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,6 +59,31 @@ class BikeController extends AbstractController
             'bike' => $bike,
         ]);
     }
+
+    /**
+     * @Route("/{id}/addOperation", name="add_operation", methods={"GET","POST"})
+     */
+    public function addOperation(Request $request, Bike $bike)
+    {
+        $operation = new Operation();
+        $formOperation= $this->createForm(OperationType::class,$operation);
+        $formOperation->handleRequest($request);
+
+        if($formOperation->isSubmitted() && $formOperation->isValid())
+        {
+            $entityManager= $this->getDoctrine()->getManager();
+            $bike->addOperation($operation);
+            $entityManager->persist($operation);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('operation_show',['id'=>$operation->getId()]);
+        }
+        return $this->render('operation/new.html.twig',[
+            'operation'=>$operation,
+            'formOperation'=>$formOperation->createView(),
+        ]);
+    }
+
 
     /**
      * @Route("/{id}/edit", name="bike_edit", methods={"GET","POST"})
