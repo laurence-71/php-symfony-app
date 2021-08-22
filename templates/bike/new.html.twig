@@ -3,12 +3,12 @@
 {% block title %}New Bike{% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container-fluid list">
 {% form_theme formBike 'bootstrap_4_layout.html.twig' %}
     <h1>Create new Bike</h1>
 
     {{ include('bike/_form.html.twig') }}
 
-    <a class="container" href="{{ path('bike_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
+    <a class="btn create" href="{{ path('bike_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
     </div>
 {% endblock %}

@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Bike;
 use App\Entity\Source;
+use App\Form\BikeType;
 use App\Form\SourceType;
 use App\Repository\SourceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -56,6 +58,32 @@ class SourceController extends AbstractController
         return $this->render('source/show.html.twig', [
             'source' => $source,
         ]);
+    }
+
+    /**
+     * @Route("/{id}/addBike", name="add_bike", methods={"GET", "POST"})
+     */
+    public function addBike(Request $request, Source $source)
+    {
+        $bike = new Bike();
+        $formBike = $this->createForm(BikeType::class, $bike);
+        $formBike->handleRequest($request);
+
+        if($formBike->isSubmitted() && $formBike->isValid())
+        {
+            $entityManager= $this->getDoctrine()->getManager();
+            $bike->setSource($source);
+            $entityManager->persist($bike);
+            $entityManager->flush();
+
+            $this->addFlash('message', "The bike has been added with success");
+            return $this->redirectToRoute('source_show',['id'=>$source->getId()]);
+        }
+        return $this->render('bike/new.html.twig',[
+            'bike'=>$bike,
+            'formBike'=>$formBike->createView(),
+        ]);
+
     }
 
     /**

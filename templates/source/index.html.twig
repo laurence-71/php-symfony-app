@@ -3,7 +3,7 @@
 {% block title %}Sources {% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container-fluid list">
     <h1>Sources List</h1>
 
     <table class="table table-bordered table-stripped">
@@ -18,7 +18,7 @@
                 <th>Address</th>
                 <th>Rgpd</th>
                 <th>Show</th>
-                <th>Edit</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -38,9 +38,9 @@
                     <td>
                     {% if is_granted("ROLE_MANAGER") %}
                        
-                       
+                       <div>
                          <a class="btn edit" href="{{ path('source_edit', {'id': source.id}) }}"><i class="bi bi-pencil"></i></a>
-                       
+                       </div>
                           {{ include('source/_delete_form.html.twig') }}
                     
                    

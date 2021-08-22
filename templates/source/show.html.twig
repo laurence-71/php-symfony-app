@@ -3,10 +3,10 @@
 {% block title %}Source{% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container-fluid list">
     <h1>Source</h1>
 
-    <table class="table table-bordered table-stripped">
+    <table class="table table-bordered ">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -43,11 +43,27 @@
             <tr>
                 <th>Bikes</th>
                 <td>
-                <a class="btn create" href="#"><i class="bi bi-plus-square"> Add a bike</i></a>
+                <div>
+                {% if source.bikes %}
+                
+                {% for bike in source.bikes %}
+                <div class="row">
+                <div class="col-sm">
+                   {{bike.category}} {{bike.brand}} {{bike.color}}
+                  </div>
+                  <div class="col-sm">
+                   <a class="btn show" href="{{path('bike_show',{'id':bike.id})}}"><i class="bi bi-info-square"></i></a>
+                </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+                </div>
+                <a class="btn create" href="{{path('add_bike',{'id':source.id})}}"><i class="bi bi-plus-square"> Add a bike</i></a>
             </td>
             </tr>
         </tbody>
     </table>
+   
 <div class="row">
 <div class="col-sm">
     <a class="btn create" href="{{ path('source_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>

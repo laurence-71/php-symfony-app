@@ -4,12 +4,12 @@ body{
     background-image: url('./fdVelo.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-   
-   
 }
 
-.container{
+.list{
     margin-top:2%;
+   width:90%;
+  
     border:rgb(73, 73, 77) solid 2px;
    background-color:rgb(73, 73, 77);
    border-radius: 10px;
@@ -38,6 +38,7 @@ ul{
 }
 
 .table{
+  
     border:rgb(73, 73, 77) solid 2px;
     background-color: rgb(240, 182, 201);
 }
