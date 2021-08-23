@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Operation;
+use App\Entity\Operator;
 use App\Form\OperationType;
+use App\Form\OperatorType;
 use App\Repository\OperationRepository;
+use App\Repository\OperatorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,6 +58,39 @@ class OperationController extends AbstractController
     {
         return $this->render('operation/show.html.twig', [
             'operation' => $operation,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/addOperator", name="add_operator", methods={"GET", "POST"})
+     */
+    public function addOperator(Request $request, OperatorRepository $operatorRepository, Operation $operation)
+    {
+        $operator = new Operator();
+        $formOperator= $this->createForm(OperatorType::class,$operator);
+        $formOperator->handleRequest($request);
+
+        if($formOperator->isSubmitted() && $formOperator->isValid())
+        {
+            $entityManager= $this->getDoctrine()->getManager();
+            $result = $operatorRepository->findOneByLastNameFirstName($operator->getLastName(),$operator->getFirstName());
+            if($result !=null)
+            {
+                $operation->addOperator($result);
+            }else{
+                $operation->addOperator($operator);
+                $entityManager->persist($operator);
+
+            }
+            $entityManager->persist($operation);
+            $entityManager->flush();
+
+            $this->addFlash('message', 'The operator has been added with success');
+            return $this->redirectToRoute('operation_show',['id'=>$operation->getId()]);
+        }
+        return $this->render('operator/new.html.twig',[
+            'operator'=>$operator,
+            'formOperator'=>$formOperator->createView(),
         ]);
     }
 

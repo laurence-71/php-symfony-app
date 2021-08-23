@@ -33,7 +33,7 @@
 {% if is_granted('ROLE_MANAGER') %}
 <div class="col-sm">
   {{ include('operator/_delete_form.html.twig') }}
-    <a href="{{ path('operator_edit', {'id': operator.id}) }}"><i class="bi bi-pencil"> Edit</i></a>
+    <a class="btn edit" href="{{ path('operator_edit', {'id': operator.id}) }}"><i class="bi bi-pencil"> Edit</i></a>
  </div> 
 {% endif %}
     </div>

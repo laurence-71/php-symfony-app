@@ -3,24 +3,25 @@
 {% block title %}Repair{% endblock %}
 
 {% block body %}
+<div class="container-fluid list">
     <h1>Repair</h1>
 
-    <table class="table">
+    <table class="table table-bordered">
         <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ repair.id }}</td>
             </tr>
             <tr>
-                <th>TakingCareDate</th>
+                <th>Taking Care Date</th>
                 <td>{{ repair.takingCareDate ? repair.takingCareDate|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>DoneDate</th>
+                <th>Done Date</th>
                 <td>{{ repair.doneDate ? repair.doneDate|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>LaborCost</th>
+                <th>Labor Cost</th>
                 <td>{{ repair.laborCost }}</td>
             </tr>
            
@@ -34,10 +35,16 @@
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('repair_index') }}">back to list</a>
-
-    <a href="{{ path('repair_edit', {'id': repair.id}) }}">edit</a>
-
-    {{ include('repair/_delete_form.html.twig') }}
+    <div class="row">
+    <div class="col-sm">
+    <a class="btn create" href="{{ path('repair_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
+    </div>
+    {% if is_granted("ROLE_MANAGER") %}
+    <div class="col-sm">
+     {{ include('repair/_delete_form.html.twig') }}
+    <a class="btn edit" href="{{ path('repair_edit', {'id': repair.id}) }}"><i class="bi bi-pencil"> Edit</i></a>
+   </div>
+    {% endif %}
+    </div>
+    </div>
 {% endblock %}

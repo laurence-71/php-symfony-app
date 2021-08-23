@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New BikeArticle{% endblock %}
+
+{% block body %}
+<div class="container-fluid list">
+{% form_theme formBikeArticle 'bootstrap_4_layout.html.twig' %}
+    <h1>Check The Bike Article</h1>
+
+<img class="bikeImg" src="./../../../assets/bikeparts.png" alt="bike schema">
+
+    {{ include('bike_article/_form.html.twig') }}
+
+    <a class="btn create" href="{{ path('bike_article_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
+    </div>
+{% endblock %}

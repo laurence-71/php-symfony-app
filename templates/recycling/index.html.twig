@@ -1,16 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recycling index{% endblock %}
+{% block title %}Recyclings{% endblock %}
 
 {% block body %}
-    <h1>Recycling index</h1>
+<div class="container-fluid list">
+    <h1>Recycling List</h1>
 
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>RecyclingDate</th>
-                <th>actions</th>
+                <th>Recycling Date</th>
+                <th>Show</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -19,17 +21,27 @@
                 <td>{{ recycling.id }}</td>
                 <td>{{ recycling.recyclingDate ? recycling.recyclingDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('recycling_show', {'id': recycling.id}) }}">show</a>
-                    <a href="{{ path('recycling_edit', {'id': recycling.id}) }}">edit</a>
+                    <a class="btn show" href="{{ path('recycling_show', {'id': recycling.id}) }}"><i class="bi bi-info-square"></i></a>
+                    </td>
+                    <td>
+                    {% if is_granted('ROLE_MANAGER') %}
+                         <div><a class="btn edit" href="{{ path('recycling_edit', {'id': recycling.id}) }}"><i class="bi bi-pencil"></i></a>
+                    </div>
+                    {{ include('recycling/_delete_form.html.twig') }}
+                    {% else %}
+                        <span col="2">Unauthorized access</span>
+                    {% endif %}
+                   
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="4">No records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('recycling_new') }}">Create new</a>
+    <a class="btn create" href="{{ path('recycling_new') }}">Create new</a>
+    </div>
 {% endblock %}

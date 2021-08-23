@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bike Articles{% endblock %}
+
+{% block body %}
+<div class="container-fluid list">
+    <h1>Bike Article List</h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Main</th>
+                <th>Brake</th>
+                <th>Wheel</th>
+                <th>Transmission</th>
+                <th>Crank</th>
+                <th>Security</th>
+                <th>Comments</th>
+                <th>Show</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for bike_article in bike_articles %}
+            <tr>
+                <td>{{ bike_article.id }}</td>
+                <td>{{ bike_article.main }}</td>
+                <td>{{ bike_article.brake }}</td>
+                <td>{{ bike_article.wheel }}</td>
+                <td>{{ bike_article.transmission }}</td>
+                <td>{{ bike_article.crank }}</td>
+                <td>{{ bike_article.security }}</td>
+                <td>{{ bike_article.comments }}</td>
+                <td>
+                    <a class="btn show" href="{{ path('bike_article_show', {'id': bike_article.id}) }}"><i class="bi bi-info-square"></i></a>
+                   </td>
+                   <td>
+                   {% if is_granted('ROLE_MANAGER') %}
+                         <div>
+                         <a class="btn edit" href="{{ path('bike_article_edit', {'id': bike_article.id}) }}"><i class="bi bi-pencil"></i></a>
+                   </div>
+                   {{ include('bike_article/_delete_form.html.twig') }}
+                   {% else %}
+                       <span col="2">Unauthorized access</span>
+                   {% endif %}
+                 
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn create" href="{{ path('bike_article_new') }}">Create new</a>
+    </div>
+{% endblock %}

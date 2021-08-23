@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RepairRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,6 +50,18 @@ class Repair
      * @ORM\OneToOne(targetEntity=Operation::class, mappedBy="repair", cascade={"persist", "remove"})
      */
     private $operation;
+
+    /**
+     * @ORM\OneToMany(targetEntity=BikeArticle::class, mappedBy="repair")
+     */
+    private $bikeArticles;
+
+    
+
+    public function __construct()
+    {
+        $this->bikeArticles = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -138,4 +152,36 @@ class Repair
 
         return $this;
     }
+
+    /**
+     * @return Collection|BikeArticle[]
+     */
+    public function getBikeArticles(): Collection
+    {
+        return $this->bikeArticles;
+    }
+
+    public function addBikeArticle(BikeArticle $bikeArticle): self
+    {
+        if (!$this->bikeArticles->contains($bikeArticle)) {
+            $this->bikeArticles[] = $bikeArticle;
+            $bikeArticle->setRepair($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBikeArticle(BikeArticle $bikeArticle): self
+    {
+        if ($this->bikeArticles->removeElement($bikeArticle)) {
+            // set the owning side to null (unless already changed)
+            if ($bikeArticle->getRepair() === $this) {
+                $bikeArticle->setRepair(null);
+            }
+        }
+
+        return $this;
+    }
+
+   
 }

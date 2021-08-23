@@ -19,6 +19,19 @@ class OperatorRepository extends ServiceEntityRepository
         parent::__construct($registry, Operator::class);
     }
 
+
+    public function findOneByLastNameFirstName($lastname, $firstName)
+    {
+        return $this->createQueryBuilder('o')
+        ->andWhere('o.lastName= :LAST')
+        ->setParameter('LAST',$lastname)
+        ->andWhere('o.firstName= :FIRST')
+        ->setParameter('FIRST',$firstName)
+        ->orderBy('o.lastName','ASC')
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
+
     // /**
     //  * @return Operator[] Returns an array of Operator objects
     //  */

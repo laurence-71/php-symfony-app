@@ -3,24 +3,31 @@
 {% block title %}Recycling{% endblock %}
 
 {% block body %}
+<div class="container-fluid list">
     <h1>Recycling</h1>
 
-    <table class="table">
+    <table class="table table-bordered">
         <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ recycling.id }}</td>
             </tr>
             <tr>
-                <th>RecyclingDate</th>
+                <th>Recycling Date</th>
                 <td>{{ recycling.recyclingDate ? recycling.recyclingDate|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('recycling_index') }}">back to list</a>
-
-    <a href="{{ path('recycling_edit', {'id': recycling.id}) }}">edit</a>
-
-    {{ include('recycling/_delete_form.html.twig') }}
+<div class="row">
+<div class="col-sm">
+    <a class="btn create" href="{{ path('recycling_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
+</div>
+{% if is_granted("ROLE_MANAGER") %}
+<div class="col-sm">
+  {{ include('recycling/_delete_form.html.twig') }}
+    <a class="btn edit" href="{{ path('recycling_edit', {'id': recycling.id}) }}"><i class="bi bi-pencil"> Edit</i></a>
+</div>
+{% endif %}
+    </div>
+    </div>
 {% endblock %}

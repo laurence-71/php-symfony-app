@@ -4,6 +4,9 @@
 
 {% block body %}
 <div class="container-fluid list">
+{% for message in app.flashes('message') %}
+    <div class="alert alert-success" role="alert">{{message}}</div>
+{% endfor %}
     <h1>Operation</h1>
 
     <table class="table table-bordered ">
@@ -23,9 +26,24 @@
                 <td>{{ operation.receptionDate ? operation.receptionDate|date('Y-m-d H:i') : '' }}</td>
             </tr>
             <tr>
+            <th>Details</th>
+            <td>
+            <div>
+            {% if operation.operators !=null %}
+            {% for operator in operation.operators %}
+                {{operator.role}}  {{operator.firstName}} {{operator.lastName}}
+            {% endfor %}
+            {% endif %}
+            </div>
+            </td>
+            </tr>
+            <tr>
             <th>Actions</th>
             <td>
-             <div>Add operators</div>
+             <div>
+
+             <a class="btn create" href="{{path('add_operator',{'id':operation.id})}}"><i class="bi bi-plus-square"> Add operators</i></a>
+            </div>
             <div>Add a repair work</div>
             <div>Add a recycling</div>
            
@@ -45,4 +63,5 @@
     {% endif %}
     </div>
     </div>
+    {{dump()}}
 {% endblock %}
