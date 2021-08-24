@@ -18,34 +18,34 @@ class BikeArticle
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="array", nullable=true)
      */
-    private $main;
+    private $main = [];
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="array", nullable=true)
      */
-    private $brake;
+    private $brake = [];
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="array", nullable=true)
      */
-    private $wheel;
+    private $wheel = [];
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="array", nullable=true)
      */
-    private $transmission;
+    private $transmission = [];
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="array", nullable=true)
      */
-    private $crank;
+    private $crank = [];
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="array", nullable=true)
      */
-    private $security;
+    private $security = [];
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -62,72 +62,72 @@ class BikeArticle
         return $this->id;
     }
 
-    public function getMain(): ?string
+    public function getMain(): ?array
     {
         return $this->main;
     }
 
-    public function setMain(?string $main): self
+    public function setMain(?array $main): self
     {
         $this->main = $main;
 
         return $this;
     }
 
-    public function getBrake(): ?string
+    public function getBrake(): ?array
     {
         return $this->brake;
     }
 
-    public function setBrake(?string $brake): self
+    public function setBrake(?array $brake): self
     {
         $this->brake = $brake;
 
         return $this;
     }
 
-    public function getWheel(): ?string
+    public function getWheel(): ?array
     {
         return $this->wheel;
     }
 
-    public function setWheel(?string $wheel): self
+    public function setWheel(?array $wheel): self
     {
         $this->wheel = $wheel;
 
         return $this;
     }
 
-    public function getTransmission(): ?string
+    public function getTransmission(): ?array
     {
         return $this->transmission;
     }
 
-    public function setTransmission(?string $transmission): self
+    public function setTransmission(?array $transmission): self
     {
         $this->transmission = $transmission;
 
         return $this;
     }
 
-    public function getCrank(): ?string
+    public function getCrank(): ?array
     {
         return $this->crank;
     }
 
-    public function setCrank(?string $crank): self
+    public function setCrank(?array $crank): self
     {
         $this->crank = $crank;
 
         return $this;
     }
 
-    public function getSecurity(): ?string
+    public function getSecurity(): ?array
     {
         return $this->security;
     }
 
-    public function setSecurity(?string $security): self
+    public function setSecurity(?array $security): self
     {
         $this->security = $security;
 

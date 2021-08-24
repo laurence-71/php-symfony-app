@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Operation;
 use App\Entity\Operator;
+use App\Entity\Repair;
 use App\Form\OperationType;
 use App\Form\OperatorType;
+use App\Form\RepairType;
 use App\Repository\OperationRepository;
 use App\Repository\OperatorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -91,6 +93,31 @@ class OperationController extends AbstractController
         return $this->render('operator/new.html.twig',[
             'operator'=>$operator,
             'formOperator'=>$formOperator->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/addRepair", name="add_repair", methods={"GET","POST"})
+     */
+    public function addRepair(Request $request,Operation $operation)
+    {
+        $repair = new Repair();
+        $formRepair= $this->createForm(RepairType::class,$repair);
+        $formRepair->handleRequest($request);
+
+        if($formRepair->isSubmitted() && $formRepair->isValid())
+        {
+            $entityManager= $this->getDoctrine()->getManager();
+            $operation->setRepair($repair);
+            $entityManager->persist($repair);
+            $entityManager->persist($operation);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('check_bike_part',['id'=>$repair->getId()]);
+        }
+        return $this->render('repair/new.html.twig',[
+            'repair'=>$repair,
+            'formRepair'=>$formRepair->createView(),
         ]);
     }
 

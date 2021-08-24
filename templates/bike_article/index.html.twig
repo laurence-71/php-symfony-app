@@ -17,6 +17,7 @@
                 <th>Crank</th>
                 <th>Security</th>
                 <th>Comments</th>
+                <th>Article Requirement</th>
                 <th>Show</th>
                 <th>Actions</th>
             </tr>
@@ -25,13 +26,48 @@
         {% for bike_article in bike_articles %}
             <tr>
                 <td>{{ bike_article.id }}</td>
-                <td>{{ bike_article.main }}</td>
-                <td>{{ bike_article.brake }}</td>
-                <td>{{ bike_article.wheel }}</td>
-                <td>{{ bike_article.transmission }}</td>
-                <td>{{ bike_article.crank }}</td>
-                <td>{{ bike_article.security }}</td>
+                <td>
+                {% if bike_article.main != null %}
+                {% for article in bike_article.main %}
+                    <div>{{article}}</div>
+                {% endfor %}
+                {% endif %}
+                </td>
+                <td>
+                {% if bike_article.brake != null %}
+                {% for article in bike_article.brake %}
+                    <div>{{article}}</div>
+                {% endfor %}
+                {% endif %}</td>
+                <td>
+                {% if bike_article.wheel != null %}
+                {% for article in bike_article.wheel %}
+                    <div>{{article}}</div>
+                {% endfor %}
+                {% endif %}</td>
+                <td>
+                {% if bike_article.transmission != null %}
+                {% for article in bike_article.transmission %}
+                   <div>{{article}}</div>
+                {% endfor %}
+                {% endif %}
+               </td>
+                <td>
+                {% if bike_article.crank != null %}
+                {% for article in bike_article.crank %}
+                    {{article}}
+                {% endfor %}
+                {% endif %}
+              </td>
+                <td>
+                {% if bike_article.security %}
+                {% for article in bike_article.security %}
+                    {{article}}
+                {% endfor %}
+                {% endif %}
+               </td>
                 <td>{{ bike_article.comments }}</td>
+                <td>show requirements</td>
                 <td>
                     <a class="btn show" href="{{ path('bike_article_show', {'id': bike_article.id}) }}"><i class="bi bi-info-square"></i></a>
                    </td>

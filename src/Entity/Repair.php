@@ -56,6 +56,8 @@ class Repair
      */
     private $bikeArticles;
 
+   
+
     
 
     public function __construct()
@@ -183,5 +185,8 @@ class Repair
         return $this;
     }
 
+   
+
+   
    
 }

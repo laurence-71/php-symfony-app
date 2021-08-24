@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\BikeArticle;
 use App\Entity\Repair;
+use App\Form\BikeArticleType;
 use App\Form\RepairType;
 use App\Repository\RepairRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -55,6 +57,30 @@ class RepairController extends AbstractController
     {
         return $this->render('repair/show.html.twig', [
             'repair' => $repair,
+        ]);
+    }
+
+    /**
+     *@Route("/{id}/check_bike_part", name="check_bike_part", methods={"GET","POST"})
+     */
+    public function checkBikePart(Request $request, Repair $repair)
+    {
+        $bikeArticle = new BikeArticle();
+        $formBikeArticle = $this->createForm(BikeArticleType::class,$bikeArticle);
+        $formBikeArticle->handleRequest($request);
+
+        if($formBikeArticle->isSubmitted() && $formBikeArticle->isValid())
+        {
+            $entityManager= $this->getDoctrine()->getManager();
+            $repair->addBikeArticle($bikeArticle);
+            $entityManager->persist($bikeArticle);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('bike_article_show',['id'=>$repair->getId()]);
+        }
+        return $this->render('bike_article/new.html.twig',[
+            'bikeArticle'=>$bikeArticle,
+            'formBikeArticle'=>$formBikeArticle->createView(),
         ]);
     }
 

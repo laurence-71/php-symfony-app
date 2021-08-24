@@ -14,33 +14,80 @@
 					<td>{{ bike_article.id }}</td>
 				</tr>
 				<tr>
+				<th colspan="2" style="text-align:center;">To be Repaired</th>
+				</tr>
+				<tr>
 					<th>Main</th>
-					<td>{{ bike_article.main }}</td>
+					<td>
+					{% if bike_article.main !=null %}
+					{% for article in bike_article.main %}
+						<div>{{article}}</div>
+					{% endfor %}
+					{% endif %}
+					</td>
 				</tr>
 				<tr>
 					<th>Brake</th>
-					<td>{{ bike_article.brake }}</td>
+					<td>
+					{% if bike_article.brake !=null %}
+					{% for article in  bike_article.brake %}
+						<div>{{article}}</div>
+					{% endfor %}
+					{% endif %}
+					</td>
 				</tr>
 				<tr>
 					<th>Wheel</th>
-					<td>{{ bike_article.wheel }}</td>
+					<td>
+					{% if bike_article.wheel !=null %}
+					{% for article in bike_article.wheel %}
+						<div>{{article}}</div>
+					{% endfor %}
+					{% endif %}
+					</td>
 				</tr>
 				<tr>
 					<th>Transmission</th>
-					<td>{{ bike_article.transmission }}</td>
+					<td>
+					{% if bike_article.transmission != null %}
+					{% for article in  bike_article.transmission %}
+						<div>{{article}}</div>
+					{% endfor %}
+					{% endif %}
+					</td>
 				</tr>
 				<tr>
 					<th>Crank</th>
-					<td>{{ bike_article.crank }}</td>
+					<td>
+					{% if bike_article.crank != null %}
+					{% for article in bike_article.crank %}
+						<div>{{article}}</div>
+					{% endfor %}
+					{% endif %}
+					</td>
 				</tr>
 				<tr>
 					<th>Security</th>
-					<td>{{ bike_article.security }}</td>
+					<td>
+					{% if bike_article.security != null %}
+					{% for article in bike_article.security %}
+						<div>{{article}}</div>
+					{% endfor %}
+					{% endif %}
+					</td>
 				</tr>
 				<tr>
 					<th>Comments</th>
 					<td>{{ bike_article.comments }}</td>
 				</tr>
+				<tr>
+				<th>Requirements</th>
+				<td>
+				<div>add new stock</div>
+				<div>add second hand stock</div>
+				</td>
+				</tr>
+				
 			</tbody>
 		</table>
 		<div class="row">
