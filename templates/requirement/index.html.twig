@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Requirements{% endblock %}
+
+{% block body %}
+<div class="container-fluid list">
+    <h1>Requirements List</h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Requirement Date</th>
+                <th>Show</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for requirement in requirements %}
+            <tr>
+                <td>{{ requirement.id }}</td>
+                <td>{{ requirement.requirementDate ? requirement.requirementDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a class="btn show" href="{{ path('requirement_show', {'id': requirement.id}) }}"><i class="bi bi-info-square"></i></a>
+                    </td>
+                    <td>
+                    {% if is_granted("ROLE_MANAGER") %}
+                        <div>
+                    <a class="btn edit" href="{{ path('requirement_edit', {'id': requirement.id}) }}"><i class="bi bi-pencil"></i></a>
+                </div>
+                 {{ include('requirement/_delete_form.html.twig') }}
+                    {% else %}
+                        <span col="2">Unauthorized access</span>
+                    {% endif %}
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn create" href="{{ path('requirement_new') }}">Create new</a>
+    </div>
+{% endblock %}

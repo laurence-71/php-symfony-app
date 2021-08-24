@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New SecondHandStock{% endblock %}
+
+{% block body %}
+<div class="container-fluid list">
+{% form_theme formSecondHandStock 'bootstrap_4_layout.html.twig' %}
+    <h1>Create new SecondHand Stock</h1>
+
+    {{ include('second_hand_stock/_form.html.twig') }}
+
+    <a class="btn create" href="{{ path('second_hand_stock_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NewStocks{% endblock %}
+
+{% block body %}
+<div class="container-fluid list">
+    <h1>NewStock List</h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+                <th>Brand</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Show</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for new_stock in new_stocks %}
+            <tr>
+                <td>{{ new_stock.id }}</td>
+                <td>{{ new_stock.label }}</td>
+                <td>{{ new_stock.brand }}</td>
+                <td>{{ new_stock.unitPrice }}</td>
+                <td>{{ new_stock.quantity }}</td>
+                <td>
+                    <a class="btn show" href="{{ path('new_stock_show', {'id': new_stock.id}) }}"><i class="bi bi-info-square"></i></a>
+                    </td>
+                    <td>
+                    {% if is_granted("ROLE_MANAGER") %}
+                          <div>
+                    <a class="btn edit" href="{{ path('new_stock_edit', {'id': new_stock.id}) }}"><i class="bi bi-pencil"></i></a>
+                    </div>
+                    {{ include('new_stock/_delete_form.html.twig') }}
+                    {% else %}
+                        <span col="2">Unauthorized access</span>
+                    {% endif %}
+                    
+                  
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn create" href="{{ path('new_stock_new') }}">Create new</a>
+    </div>
+{% endblock %}

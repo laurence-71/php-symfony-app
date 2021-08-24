@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NewStock{% endblock %}
+
+{% block body %}
+<div class="container-fluid list">
+    <h1>NewStock</h1>
+
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ new_stock.id }}</td>
+            </tr>
+            <tr>
+                <th>Label</th>
+                <td>{{ new_stock.label }}</td>
+            </tr>
+            <tr>
+                <th>Brand</th>
+                <td>{{ new_stock.brand }}</td>
+            </tr>
+            <tr>
+                <th>Unit Price</th>
+                <td>{{ new_stock.unitPrice }}</td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td>{{ new_stock.quantity }}</td>
+            </tr>
+        </tbody>
+    </table>
+<div class="row">
+<div class="col-sm">
+    <a class="btn create" href="{{ path('new_stock_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
+</div>
+{% if is_granted('ROLE_MANAGER') %}
+
+<div class="col-sm">
+  {{ include('new_stock/_delete_form.html.twig') }}
+    <a class="btn edit" href="{{ path('new_stock_edit', {'id': new_stock.id}) }}"><i class="bi bi-pencil"> Edit</i></a>
+</div>
+  {% endif %}
+    </div>
+    </div>
+{% endblock %}

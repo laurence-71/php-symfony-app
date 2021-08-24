@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SecondHandStocks{% endblock %}
+
+{% block body %}
+<div class="container-fluid list">
+    <h1>SecondHand Stocks List</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+                <th>Brand</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Show</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for second_hand_stock in second_hand_stocks %}
+            <tr>
+                <td>{{ second_hand_stock.id }}</td>
+                <td>{{ second_hand_stock.label }}</td>
+                <td>{{ second_hand_stock.brand }}</td>
+                <td>{{ second_hand_stock.unitPrice }}</td>
+                <td>{{ second_hand_stock.quantity }}</td>
+                <td>
+                    <a class="btn show" href="{{ path('second_hand_stock_show', {'id': second_hand_stock.id}) }}"><i class="bi bi-info-square"></i></a>
+                   </td>
+                   <td>
+                   {% if is_granted("ROLE_MANAGER") %}
+                       <div>
+                    <a class="btn edit" href="{{ path('second_hand_stock_edit', {'id': second_hand_stock.id}) }}"><i class="bi bi-pencil"></i></a>
+                </div>
+                 {{ include('second_hand_stock/_delete_form.html.twig') }}
+                   {% else %}
+                       <span col="2">Unauthorized access</span>
+                   {% endif %}
+                   
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn create" href="{{ path('second_hand_stock_new') }}">Create new</a>
+</div>
+{% endblock %}

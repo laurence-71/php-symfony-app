@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Requirement{% endblock %}
+
+{% block body %}
+<div class="container-fluid list">
+{% form_theme formRequirement 'bootstrap_4_layout.html.twig' %}
+    <h1>Create new Requirement</h1>
+
+    {{ include('requirement/_form.html.twig') }}
+
+    <a class="btn create" href="{{ path('requirement_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
+    </div>
+{% endblock %}

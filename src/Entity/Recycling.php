@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RecyclingRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,16 @@ class Recycling
      * @ORM\OneToOne(targetEntity=Operation::class, mappedBy="recycling", cascade={"persist", "remove"})
      */
     private $operation;
+
+    /**
+     * @ORM\OneToMany(targetEntity=SecondHandStock::class, mappedBy="recycling")
+     */
+    private $secondHandStocks;
+
+    public function __construct()
+    {
+        $this->secondHandStocks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -62,6 +74,36 @@ class Recycling
         }
 
         $this->operation = $operation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SecondHandStock[]
+     */
+    public function getSecondHandStocks(): Collection
+    {
+        return $this->secondHandStocks;
+    }
+
+    public function addSecondHandStock(SecondHandStock $secondHandStock): self
+    {
+        if (!$this->secondHandStocks->contains($secondHandStock)) {
+            $this->secondHandStocks[] = $secondHandStock;
+            $secondHandStock->setRecycling($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSecondHandStock(SecondHandStock $secondHandStock): self
+    {
+        if ($this->secondHandStocks->removeElement($secondHandStock)) {
+            // set the owning side to null (unless already changed)
+            if ($secondHandStock->getRecycling() === $this) {
+                $secondHandStock->setRecycling(null);
+            }
+        }
 
         return $this;
     }
