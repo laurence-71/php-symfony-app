@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="container-fluid list">
-    <h1>Repair List</h1>
+    <h1>Current Repair List</h1>
 
     <table class="table table-bordered">
         <thead>
@@ -21,7 +21,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for repair in repairs %}
+        {% for repair in currentRepairList %}
             <tr>
                 <td>{{ repair.id }}</td>
                 <td>{{ repair.takingCareDate ? repair.takingCareDate|date('Y-m-d H:i:s') : '' }}</td>

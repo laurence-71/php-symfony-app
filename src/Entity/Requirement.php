@@ -34,6 +34,11 @@ class Requirement
      */
     private $secondHandStocks;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Repair::class, mappedBy="requirement", cascade={"persist", "remove"})
+     */
+    private $repair;
+
     public function __construct()
     {
         $this->newStocks = new ArrayCollection();
@@ -113,6 +118,28 @@ class Requirement
                 $secondHandStock->setRequirement(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRepair(): ?Repair
+    {
+        return $this->repair;
+    }
+
+    public function setRepair(?Repair $repair): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($repair === null && $this->repair !== null) {
+            $this->repair->setRequirement(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($repair !== null && $repair->getRequirement() !== $this) {
+            $repair->setRequirement($this);
+        }
+
+        $this->repair = $repair;
 
         return $this;
     }

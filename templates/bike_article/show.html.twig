@@ -83,8 +83,17 @@
 				<tr>
 				<th>Requirements</th>
 				<td>
-				<div>add new stock</div>
-				<div>add second hand stock</div>
+				<div>
+				{% if bike_article.repair.requirement != null %}
+					{{bike_article.repair.requirement.requirementDate|date('Y-m-d H:i')}}
+				<a class="btn show" href="{{path('requirement_show',{'id':bike_article.repair.requirement.id})}}"><i class="bi bi-info-square"></i></a>
+				{% else %}
+						<a class="btn create" href="{{path('add_requirement',{'id':bike_article.repair.id})}}"><i class="bi bi-plus-square"> Add requirement</i></a>
+				{% endif %}
+				
+			
+				</div>
+			
 				</td>
 				</tr>
 				

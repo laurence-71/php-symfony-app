@@ -16,11 +16,49 @@
                 <th>Requirement Date</th>
                 <td>{{ requirement.requirementDate ? requirement.requirementDate|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
+            <tr>
+            <th>New Stock</th>
+            <td>
+            {% if requirement.newStocks != null %}
+           {% set totalNewStockRequirement = 0 %}
+                {% for article in requirement.newStocks %}
+                  <div> {{article.quantity}} {{article.label}}  at a unit price of {{article.unitPrice }} €</div>
+                {% set totalNewStockRequirement = totalNewStockRequirement + article.unitPrice * article.quantity %}
+                {% endfor %}
+           
+             <div>For a total of {{totalNewStockRequirement}} €</div>
+            {% else %}
+                No requirement
+            {% endif %}
+            <a class="btn create" href="{{path('add_new_stock',{'id':requirement.id})}}"><i class="bi bi-plus-square"> Add new articles</i></a>
+           </td>
+            </tr>
+            <tr>
+            <th>Second-Hand Stock</th>
+            <td>
+            {% if requirement.secondHandStocks != null %}
+            {% set totalSecondHandStockRequirement = 0 %}
+            {% for article in requirement.secondHandStocks %}
+                <div> {{article.quantity}} {{article.label}} at a unit price of {{article.unitprice}} €</div>
+                {% set totalSecondHandStockRequirement = totalSecondHandStockRequirement + article.unitPrice * article.quantity %}
+           {% endfor %}
+            
+            <div>For a total of {{totalSecondHandStockRequirement}} €</div>
+           {% else %}
+               No requirement
+            {% endif %}
+            <a class="btn create" href="{{path('add_second_hand_stock',{'id':requirement.id})}}"><i class="bi bi-plus-square"> Add second-hand articles</i></a>
+            </td>
+            </tr>
+
         </tbody>
     </table>
 <div class="row">
 <div class="col-sm">
     <a class="btn create" href="{{ path('requirement_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
+</div>
+<div class="col-sm">
+<a class="btn create" href="{{path('repair_estimate',{'id':requirement.id})}}">Estimate</a>
 </div>
 {% if is_granted("ROLE_MANAGER") %}
 <div class="col-sm">

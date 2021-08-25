@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\NewStock;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,11 +14,22 @@ class NewStockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label')
-            ->add('brand')
-            ->add('unit_price')
-            ->add('quantity')
-            ->add('requirement')
+            ->add('label',TextType::class,[
+                'label'=>'Label'
+            ])
+            ->add('brand', TextType::class,[
+                'label'=>'Brand'
+            ])
+            ->add('unit_price',NumberType::class,[
+                'label'=>'Unit Price',
+                'required'=>false,
+
+            ])
+            ->add('quantity',NumberType::class,[
+                'label'=>'Quantity',
+                
+            ])
+           //->add('requirement')
         ;
     }
 

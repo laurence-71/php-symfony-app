@@ -30,6 +30,12 @@
                 <td>{{ repair.comments }}</td>
             </tr>
             <tr>
+            <th>Repair Summary</th>
+            <td>
+            <a class="btn show" href="{{path('bike_article_show',{'id':repair.id})}}"><i class="bi bi-info-square"></i></a>
+            </td>
+            </tr>
+            <tr>
                 <th>Validation</th>
                 <td>{{ repair.validation ? 'Yes' : 'No' }}</td>
             </tr>

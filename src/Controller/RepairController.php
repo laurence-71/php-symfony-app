@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\BikeArticle;
 use App\Entity\Repair;
+use App\Entity\Requirement;
 use App\Form\BikeArticleType;
 use App\Form\RepairType;
+use App\Form\RequirementType;
 use App\Repository\RepairRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +26,17 @@ class RepairController extends AbstractController
     {
         return $this->render('repair/index.html.twig', [
             'repairs' => $repairRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/currentRepairList", name="current_repair_list", methods={"GET"})
+     */
+    public function currentRepairList(RepairRepository $repairRepository)
+    {
+        return $this->render('repair/currentRepairList.html.twig',[
+            'currentRepairList'=>$repairRepository->findBy(["validation"=>null],["takingCareDate"=>"DESC"]),
+
         ]);
     }
 
@@ -61,6 +74,16 @@ class RepairController extends AbstractController
     }
 
     /**
+     * @Route("/{id}/estimate", name="repair_estimate", methods={"GET"})
+     */
+    public function estimate(Repair $repair):Response
+    {
+        return $this->render('repair/estimate.html.twig',[
+            'repair'=>$repair,
+        ]);
+    }
+
+    /**
      *@Route("/{id}/check_bike_part", name="check_bike_part", methods={"GET","POST"})
      */
     public function checkBikePart(Request $request, Repair $repair)
@@ -81,6 +104,32 @@ class RepairController extends AbstractController
         return $this->render('bike_article/new.html.twig',[
             'bikeArticle'=>$bikeArticle,
             'formBikeArticle'=>$formBikeArticle->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/addRequirement", name="add_requirement", methods={"GET","POST"})
+     */
+    public function addRequirement(Request $request, Repair $repair)
+    {
+        $requirement = new Requirement();
+        $formRequirement = $this->createForm(RequirementType::class,$requirement);
+        $formRequirement->handleRequest($request);
+
+        if($formRequirement->isSubmitted() && $formRequirement->isValid())
+        {
+            $entityManager= $this->getDoctrine()->getManager();
+           $repair->setRequirement($requirement);
+           $entityManager->persist($requirement);
+           $entityManager->persist($repair);
+           $entityManager->flush();
+
+           return $this->redirectToRoute('requirement_show',['id'=>$repair->getId()]);
+
+        }
+        return $this->render('requirement/new.html.twig',[
+            'requirement'=>$requirement,
+            'formRequirement'=>$formRequirement->createView(),
         ]);
     }
 

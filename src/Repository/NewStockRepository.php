@@ -19,6 +19,19 @@ class NewStockRepository extends ServiceEntityRepository
         parent::__construct($registry, NewStock::class);
     }
 
+    public function findOneByLabelBrandQuantity($label, $brand, $quantity)
+    {
+        return $this->createQueryBuilder('n')
+        ->andWhere('n.label= :LABEL')
+        ->setParameter('LABEL',$label)
+        ->andWhere('n.brand= :BRAND')
+        ->setParameter('BRAND',$brand)
+        ->andWhere('n.quantity= :QUANTITY')
+        ->setParameter('QUANTITY',$quantity)
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
+
     // /**
     //  * @return NewStock[] Returns an array of NewStock objects
     //  */

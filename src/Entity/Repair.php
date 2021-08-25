@@ -56,6 +56,11 @@ class Repair
      */
     private $bikeArticles;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Requirement::class, inversedBy="repair", cascade={"persist", "remove"})
+     */
+    private $requirement;
+
    
 
     
@@ -181,6 +186,18 @@ class Repair
                 $bikeArticle->setRepair(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRequirement(): ?Requirement
+    {
+        return $this->requirement;
+    }
+
+    public function setRequirement(?Requirement $requirement): self
+    {
+        $this->requirement = $requirement;
 
         return $this;
     }
