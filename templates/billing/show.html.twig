@@ -9,19 +9,137 @@
     <table class="table table-bordered">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ billing.id }}</td>
+                <th>Bill</th>
+                <td>
+                <div class="row">
+                <div class="col-sm">
+                <div> N°{{ billing.id }}</div>
+                </div>
+                <div class="col-sm">
+                <div> Date : {{ billing.billingDate ? billing.billingDate|date('Y-m-d') : '' }}</div>
+                </div>
+                <div class="col-sm">
+                <div>Type : {{ billing.type }}</div>
+                <div>
+                </td>
             </tr>
             <tr>
-                <th>Billing Date</th>
-                <td>{{ billing.billingDate ? billing.billingDate|date('Y-m-d') : '' }}</td>
+                <th>Source</th>
+                <td>
+                <div class="row">
+                <div class="col-sm">
+                    <div>Origin : {{billing.operation.bike.source.origin}}</div>
+                </div>
+                <div class="col-sm">
+                <div> Contact : {{billing.operation.bike.source.telephone}} {{billing.operation.bike.source.email}}</div>
+                </div>
+                </div>
+                </td>
             </tr>
             <tr>
-                <th>Type</th>
-                <td>{{ billing.type }}</td>
+                <th>Bike</th>
+                <td>
+                <div class="row">
+                    <div class="col-sm">
+                    <div>Brand : {{billing.operation.bike.brand}}</div>
+                    </div>
+                     <div class="col-sm">
+                    <div>Category : {{billing.operation.bike.category}}</div>
+                    </div>
+                    
+                </div>
+                </td>
             </tr>
+            <tr>
+            <th>Operators</th>
+            <td>
+                {% for operator in billing.operation.operators %}
+                   <div> {{operator.role}} {{operator.firstName}} {{operator.lastName}}</div>
+                {% endfor %}
+            </td>
+            </tr>
+            <tr>
+            <th>Operation</th>
+            <td>
+            <div class="row">
+            <div class="col-sm">
+            <div>Bike undertaken the {{billing.operation.repair.takingCareDate|date('Y-m-d')}} </div>
+            </div>
+            <div class="col-sm">
+            <div>Bike repair done the {{billing.operation.repair.doneDate|date('Y-m-d')}}</div>
+            </div>
+            </div>
+            </td>
+            </tr>
+           
         </tbody>
     </table>
+    
+    <h2>Requirements</h2>
+    <table class="table table-bordered">
+    {% if billing.operation.repair.requirement !=null %}
+    
+        <thead>
+        <th>New stock article label</th>
+        <th>Brand</th>
+        <th>Quantity</th>
+        <th>Unit Price</th>
+        <th>Total</th>
+        </thead>
+        <tbody>
+        {% set totalNewStock = 0 %}
+        {% for article in billing.operation.repair.requirement.newStocks %}
+            <tr>
+        <td>{{article.label}}</td>
+        <td>{{article.brand}}</td>
+        <td class="text-end">{{article.quantity}}</td>
+        <td class="text-end">{{article.unitPrice}} €</td>
+        <td class="text-end">{{article.quantity * article.unitPrice}} €</td>
+        {% set totalNewStock = totalNewStock + article.quantity * article.unitPrice %}
+        </tr>
+        {% else %}
+            <tr>
+            <td colspan="5"> No new stock article</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+         <thead>
+        <th>Second hand stock article label</th>
+        <th>Brand</th>
+        <th>Quantity</th>
+        <th>Unit Price</th>
+        <th>Total</th>
+
+        </thead>
+        <tbody>
+        {% set totalSecondHandStock = 0 %}
+        {% for article in billing.operation.repair.requirement.secondHandStocks %}
+            <tr>
+            <td>{{article.label}}</td>
+            <td>{{article.brand}}</td>
+            <td class="text-end">{{article.quantity}}</td>
+            <td class="text-end">{{article.unitPrice}} €</td>
+            <td class="text-end">{{article.quantity * article.unitPrice}} €</td>
+            {% set totalSecondHandStock = totalSecondHandStock + article.quantity * article.unitPrice %}
+            </tr>
+        {% else %}
+            <tr>
+            <td colspan="5">No second hand stock article</td>
+            </tr>
+        {% endfor %}
+      
+        </tbody>
+        <tr>
+        <th>Labor Cost</th>
+        <td colspan="4" class="text-end">{{billing.operation.repair.laborCost}} €</td>
+        </tr>
+        <tr>
+        <th>Total requirement and labor cost</th>
+        <td colspan="4" class="text-end"><strong>{{billing.operation.repair.laborCost + totalNewStock + totalSecondHandStock}} €</strong></td>
+        </tr>
+    {% endif %}
+    </table>
+    <div class="text-center estimate">The repair has been validate by a professionnal and meet security standards</div>
     <div class="row">
     <div class="col-sm">
     <a class="btn create" href="{{ path('billing_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>

@@ -29,14 +29,14 @@
                 <td>{{ repair.laborCost }}</td>
                
                 <td>{{ repair.comments }}</td>
-                <td>{{ repair.validation ? 'Yes' : 'No' }}</td>
+                <td>{{ repair.validation ? 'Yes' : 'Not yet' }}</td>
                 <td>
                     <a class="btn show" href="{{ path('repair_show', {'id': repair.id}) }}"><i class="bi bi-info-square"></i></a>
                     </td>
                     <td>
                     {% if is_granted('ROLE_MANAGER') %}
                          
-                    <a class="btn edit" href="{{ path('repair_edit', {'id': repair.id}) }}"><i class="bi bi-pencil"> Edit</i></a>
+                    <a class="btn edit" href="{{ path('repair_edit', {'id': repair.id}) }}"><i class="bi bi-pencil"></i></a>
                 
                 {{ include('repair/_delete_form.html.twig') }}
               
@@ -54,6 +54,6 @@
         </tbody>
     </table>
 
-    <a class="btn create" href="{{ path('repair_new') }}">Create new</a>
+    <a class="btn create" href="{{ path('current_repair_list') }}">Current repair list</a>
     </div>
 {% endblock %}

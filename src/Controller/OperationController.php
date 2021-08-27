@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Billing;
 use App\Entity\Operation;
 use App\Entity\Operator;
 use App\Entity\Repair;
+use App\Form\BillingType;
 use App\Form\OperationType;
 use App\Form\OperatorType;
 use App\Form\RepairType;
@@ -118,6 +120,31 @@ class OperationController extends AbstractController
         return $this->render('repair/new.html.twig',[
             'repair'=>$repair,
             'formRepair'=>$formRepair->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/addBilling", name="add_billing",methods={"GET","POST"})
+     */
+    public function addBilling(Request $request, Operation $operation)
+    {
+        $billing = new Billing();
+        $formBilling = $this->createForm(BillingType::class,$billing);
+        $formBilling->handleRequest($request);
+
+        if($formBilling->isSubmitted() && $formBilling->isValid())
+        {
+            $entityManager = $this->getDoctrine()->getManager();
+            $operation->setBilling($billing);
+            $entityManager->persist($billing);
+            $entityManager->persist($operation);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('billing_show',['id'=>$operation->getId()]);
+        }
+        return $this->render('billing/new.html.twig',[
+            'billing'=>$billing,
+            'formBilling'=>$formBilling->createView(),
         ]);
     }
 

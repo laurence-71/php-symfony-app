@@ -31,10 +31,15 @@
             <div>
             {% if operation.operators !=null %}
             {% for operator in operation.operators %}
-                {{operator.role}}  {{operator.firstName}} {{operator.lastName}}
+                <div>{{operator.role}}  {{operator.firstName}} {{operator.lastName}}</div>
             {% endfor %}
             {% endif %}
             </div>
+            {% if operation.repair != null %}
+               <div> Bike has been undertaken the {{operation.repair.takingCareDate|date('Y-m-d H:i')}}</div>
+                <div>Repair has been done the {{operation.repair.doneDate|date('Y-m-d H:i')}}</div>
+            {% endif %}
+            
             </td>
             </tr>
             <tr>
@@ -47,8 +52,12 @@
             <div>
             <a class="btn create" href="{{path('add_repair',{'id':operation.id})}}"><i class="bi bi-plus-square"> Add a repair work</i></a>
            </div>
-            <div>Add a recycling</div>
-           
+            <div>
+            <a class="btn create" href=""><i class="bi bi-plus-square"> Add a recycling work</i></a>
+           </div>
+           <div>
+           <a class="btn create" href="{{path('add_billing',{'id':operation.id})}}"><i class="bi bi-plus-square"> Billing</i></a>
+           </div>
             </td>
             </tr>
         </tbody>

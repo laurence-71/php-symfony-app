@@ -43,6 +43,7 @@ ul{
 .table{
   
     border:rgb(73, 73, 77) solid 2px;
+    border-radius: 10px;
     background-color: rgb(240, 182, 201);
 }
 
@@ -83,21 +84,36 @@ label{
     float:right;
 }
 
+.title{
+    background-color: rgb(73, 73, 77);
+}
+
 h1{
     text-align: center;
     margin-top: 5%;
     font-size: 40px;
-    border:rgb(73, 73, 77) solid 2px;
-    border-radius: 15px;
-    background-color:rgb(240, 182, 201) ;
+    border:rgb(205, 205, 231) solid 2px;
+    border-radius: 10px;
+   color:rgb(205, 205, 231);
    margin-left: 20px;
    margin-right:20px;
 
 }
 
 h2{
-    color:rgb(205, 205, 231)
+    color:rgb(205, 205, 231);
+    border:rgb(205, 205, 231) solid 2px;
+    border-radius: 10px;
+    text-align: center;
 }
+
+.estimate{
+    color:rgb(205, 205, 231);
+    border:rgb(205, 205, 231) solid 2px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
 
 .bikeImg{
     height:100%;

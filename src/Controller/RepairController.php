@@ -7,6 +7,7 @@ use App\Entity\Repair;
 use App\Entity\Requirement;
 use App\Form\BikeArticleType;
 use App\Form\RepairType;
+use App\Form\RepairValidationType;
 use App\Form\RequirementType;
 use App\Repository\RepairRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -130,6 +131,28 @@ class RepairController extends AbstractController
         return $this->render('requirement/new.html.twig',[
             'requirement'=>$requirement,
             'formRequirement'=>$formRequirement->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/repairValidation", name="repair_validation",methods={"GET","POST"})
+     */
+    public function repairValidation(Request $request, Repair $repair)
+    {
+        $formRepairValidation = $this->createForm(RepairValidationType::class,$repair);
+        $formRepairValidation->handleRequest($request);
+
+        if($formRepairValidation->isSubmitted() && $formRepairValidation->isValid())
+        {
+            $entityManager= $this->getDoctrine()->getManager();
+            $entityManager->persist($repair);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('operation_show',['id'=>$repair->getId()]);
+        }
+        return $this->render('repair/validation.html.twig',[
+            'repairValidation'=>$repair,
+            'formRepairValidation'=>$formRepairValidation->createView(),
         ]);
     }
 

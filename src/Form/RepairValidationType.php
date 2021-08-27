@@ -6,6 +6,7 @@ use App\Entity\Repair;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,7 +22,10 @@ class RepairValidationType extends AbstractType
                 'widget'=>'single_text'
             ])
             //->add('laborCost')
-            //->add('comments')
+            ->add('comments',TextType::class,[
+                'label'=>'Comments',
+                'required'=>false,
+            ])
             ->add('validation',CheckboxType::class,[
                 'label'=>'Validation',
                 'required'=>true,

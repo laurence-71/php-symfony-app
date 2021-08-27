@@ -13,10 +13,6 @@
                 <th>Origin</th>
                 <th>Purpose</th>
                 <th>Deposit Date</th>
-                <th>Phone Number</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Rgpd</th>
                 <th>Show</th>
                 <th>Actions</th>
             </tr>
@@ -28,10 +24,7 @@
                 <td>{{ source.origin }}</td>
                 <td>{{ source.purpose }}</td>
                 <td>{{ source.depositDate ? source.depositDate|date('Y-m-d H:i') : '' }}</td>
-                <td>{{ source.telephone }}</td>
-                <td>{{ source.email }}</td>
-                <td>{{ source.address }}</td>
-                <td>{{ source.rgpd ? 'Yes' : 'No' }}</td>
+               
                 <td>
                     <a class="btn show" href="{{ path('source_show', {'id': source.id}) }}"><i class="bi bi-info-square"></i></a>
                     </td>

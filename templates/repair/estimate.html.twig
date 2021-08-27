@@ -1,5 +1,244 @@
 {% extends "base.html.twig" %}
-{% block title %}Estimate{% endblock %}
+{% block title %}Estimate
+{% endblock %}
 {% block body %}
-{{dump()}}
+	<div class="container-fluid list">
+		<h1>Estimate  Bike N°
+			{{repair.operation.bike.serialNumber}}</h1>
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Source</th>
+					<td>
+						<div class="row">
+							<div class="col-sm">
+								<div>Origin :
+									{{repair.operation.bike.source.origin}}</div>
+							</div>
+							<div class="col-sm">
+								<div>Purpose :
+									{{repair.operation.bike.source.purpose}}</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>Contact</th>
+					<td>
+						<div class="row">
+							<div class="col-sm">
+								<div>Phone Number :
+									{{repair.operation.bike.source.telephone}}
+								</div>
+							</div>
+							<div class="col-sm">
+								<div>Email :
+									{{repair.operation.bike.source.email}}
+								</div>
+							</div>
+							<div class="col-sm">
+								<div>Address :
+									{{repair.operation.bike.source.Address}}
+								</div>
+							</div>
+						</td>
+					</td>
+				</tr>
+				<tr>
+					<th>Bike</th>
+					<td>
+						<div class="row">
+							<div class="col-sm">
+								<div>Brand :
+									{{repair.operation.bike.brand}}</div>
+							</div>
+							<div class="col-sm">
+								<div>Category :
+									{{repair.operation.bike.category}}
+								</div>
+							</div>
+							<div class="col-sm">
+								<div>Color :
+									{{repair.operation.bike.color}}</div>
+							</div>
+							<div class="col-sm">
+								<div>Size :
+									{{repair.operation.bike.size}}</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>Operation</th>
+					<td>
+						<div class="row">
+							<div class="col-sm">
+								<div>Reception Date :
+									{{repair.operation.receptionDate|date('Y-m-d H:i')}}</div>
+							</div>
+
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>Operators</th>
+					<td>
+						{% for operator in repair.operation.operators %}
+							<div>{{operator.role}}
+							{{operator.firstName}}
+							{{operator.lastName}}</div>
+						
+						{% endfor %}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Bike check on the
+			{{repair.takingCareDate|date('Y-m-d H:i')}}</h2>
+		<table class="table table-bordered">
+			<tbody>
+				{% if repair.bikeArticles != null %}
+					{% for  bikeArticle in repair.bikeArticles %}
+						<tr>
+							<th>Main</th>
+							<td>
+								{% for article in bikeArticle.main %}
+									<div>{{article}}</div>
+								{% endfor %}
+							</td>
+						</tr>
+						<tr>
+							<th>Brake</th>
+							<td>
+								{% for article in bikeArticle.brake %}
+									<div>{{article}}</div>
+								{% endfor %}
+
+							</td>
+						</tr>
+						<tr>
+							<th>Wheel</th>
+							<td>
+								{% for article in bikeArticle.wheel %}
+									<div>{{article}}</div>
+								{% endfor %}
+							</td>
+						</tr>
+						<tr>
+							<th>Transmission</th>
+							<td>
+								{% for article in bikeArticle.transmission %}
+									<div>{{article}}</div>
+								{% endfor %}
+							</td>
+						</tr>
+						<tr>
+							<th>Crank</th>
+							<td>
+								{% for article in bikeArticle.crank %}
+									<div>{{article}}</div>
+								{% endfor %}
+							</td>
+						</tr>
+						<tr>
+							<th>Security</th>
+							<td>
+								{% for article in bikeArticle.security %}
+									<div>{{article}}</div>
+								{% endfor %}
+							</td>
+						</tr>
+						<tr>
+							<th>Comments</th>
+							<td>
+								<div>{{bikeArticle.comments}}</div>
+							</td>
+						</tr>
+					{% endfor %}
+				{% endif %}
+			</tbody>
+		</table>
+		<h2>Requirements</h2>
+		<table class="table table-bordered">
+			{% if repair.requirement !=null %}
+				<thead>
+					<th>New stock article label</th>
+					<th>Brand</th>
+					<th>Quantity</th>
+					<th>Unit Price</th>
+					<th>Total</th>
+				</thead>
+				<tbody>
+					{% set totalNewStock = 0 %}
+					{% for article in repair.requirement.newStocks %}
+						<tr>
+							<td>{{article.label}}</td>
+							<td>{{article.brand}}</td>
+							<td class="text-end">{{article.quantity}}</td>
+							<td class="text-end">{{article.unitPrice}}
+								€</td>
+							<td class="text-end">{{article.unitPrice * article.quantity}}
+								€</td>
+							{% set totalNewStock = totalNewStock + article.unitPrice * article.quantity %}
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="5">No new stock requirement</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			
+			<thead>
+				<th>Second hand stock article Label</th>
+				<th>Brand</th>
+				<th>Quantity</th>
+				<th>Unit Price</th>
+				<th>Total</th>
+
+			</thead>
+			<tbody>
+				{% set totalSecondHandStock = 0 %}
+				{% for article in repair.requirement.secondHandStocks %}
+					<tr>
+						<td>{{article.label}}</td>
+						<td>{{article.brand}}</td>
+						<td class="text-end">{{article.quantity}}</td>
+						<td class="text-end">{{article.unitPrice}}
+							€</td>
+						<td class="text-end">{{article.unitPrice * article.quantity}}
+							€</td>
+						{% set totalSecondHandStock = totalSecondHandStock + article.unitPrice * article.quantity %}
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="5" class="text-center">No second-hand stock requiremnent</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+			<tr>
+				<th>Labor Cost</th>
+				<td colspan="4" class="text-center">{{repair.laborCost}}
+					€</td>
+			</tr>
+			<tr>
+				<th>Total requirement and labor cost</th>
+				<td colspan="4" class="text-center">
+					<strong>{{repair.laborCost + totalNewStock + totalSecondHandStock}}
+					€</strong>
+				</td>
+			</tr>
+			{% endif %}
+		</table>
+		<div class=" text-center estimate">This bike has been check and meet security standards</div>
+		<div class="estimate">When you registered you have accepted that we collected your data and that it will not be used for commercial purposes and will be automatically destroyed after 2 years of inactivity or at your request
+		</div>
+		<div class="estimate">Signature :
+		</div>
+		<div class="row">
+			<div class="col-sm">
+				<a class="btn create" href="{{path('current_repair_list')}}">
+					Repair Curent List</a>
+			</div>
+		</div>
+	</div>
 {% endblock %}

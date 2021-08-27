@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="container">
-		<h1>Profile of
+		<h1 class="title">Profile of
 			{{ app.user.firstName }}</h1>
 		{% for  message in app.flashes('message') %}
 			<div class="alert alert-success" role="alert">

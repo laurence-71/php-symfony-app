@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+{% block title %}Repair Validation{% endblock %}
+{% block body %}
+{% form_theme formRepairValidation 'bootstrap_4_layout.html.twig' %}
+<div class="container-fluid list">
+<h1>Validation of the repair of the bike N°{{repairValidation.operation.bike.serialNumber}}</h1>
+{{form_start(formRepairValidation)}}
+{{form_widget(formRepairValidation)}}
+<button class="btn create">{{button_label|default('Billing')}}</button>
+{{form_end(formRepairValidation)}}
+</div>
+{% endblock %}
