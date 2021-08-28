@@ -2,41 +2,35 @@
 
 namespace App\Form;
 
-use App\Entity\NewStock;
+use App\Entity\Transformation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class NewStockType extends AbstractType
+class TransformationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label',TextType::class,[
-                'label'=>'Label'
+            ->add('article_label',TextType::class,[
+                'label'=>'Article label'
             ])
-            ->add('brand', TextType::class,[
-                'label'=>'Brand'
-            ])
-            ->add('unit_price',NumberType::class,[
-                'label'=>'Unit Price in Euro',
-                'required'=>false,
-
+            ->add('destination',TextType::class,[
+                'label'=>'Destination'
             ])
             ->add('quantity',NumberType::class,[
-                'label'=>'Quantity',
-                
+                'label'=>'Quantity'
             ])
-           //->add('requirement')
+            //->add('recycling')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => NewStock::class,
+            'data_class' => Transformation::class,
         ]);
     }
 }

@@ -34,9 +34,21 @@ class Recycling
      */
     private $secondHandStocks;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Transformation::class, mappedBy="recycling")
+     */
+    private $transformations;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Trash::class, mappedBy="recycling")
+     */
+    private $trashes;
+
     public function __construct()
     {
         $this->secondHandStocks = new ArrayCollection();
+        $this->transformations = new ArrayCollection();
+        $this->trashes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,6 +114,66 @@ class Recycling
             // set the owning side to null (unless already changed)
             if ($secondHandStock->getRecycling() === $this) {
                 $secondHandStock->setRecycling(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Transformation[]
+     */
+    public function getTransformations(): Collection
+    {
+        return $this->transformations;
+    }
+
+    public function addTransformation(Transformation $transformation): self
+    {
+        if (!$this->transformations->contains($transformation)) {
+            $this->transformations[] = $transformation;
+            $transformation->setRecycling($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransformation(Transformation $transformation): self
+    {
+        if ($this->transformations->removeElement($transformation)) {
+            // set the owning side to null (unless already changed)
+            if ($transformation->getRecycling() === $this) {
+                $transformation->setRecycling(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Trash[]
+     */
+    public function getTrashes(): Collection
+    {
+        return $this->trashes;
+    }
+
+    public function addTrash(Trash $trash): self
+    {
+        if (!$this->trashes->contains($trash)) {
+            $this->trashes[] = $trash;
+            $trash->setRecycling($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrash(Trash $trash): self
+    {
+        if ($this->trashes->removeElement($trash)) {
+            // set the owning side to null (unless already changed)
+            if ($trash->getRecycling() === $this) {
+                $trash->setRecycling(null);
             }
         }
 

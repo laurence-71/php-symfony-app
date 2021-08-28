@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Transformation{% endblock %}
+
+{% block body %}
+<div class="container-fluid list">
+    <h1>Transformation</h1>
+
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ transformation.id }}</td>
+            </tr>
+            <tr>
+                <th>Article Label</th>
+                <td>{{ transformation.articleLabel }}</td>
+            </tr>
+            <tr>
+                <th>Destination</th>
+                <td>{{ transformation.destination }}</td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td>{{ transformation.quantity }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+    <div class="col-sm">
+    <a class="btn create" href="{{ path('transformation_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
+</div>
+{% if is_granted("ROLE_MANAGER") %}
+<div class="col-sm">
+  {{ include('transformation/_delete_form.html.twig') }}
+    <a class="btn edit" href="{{ path('transformation_edit', {'id': transformation.id}) }}"><i class="bi bi-pencil"> Edit</i></a>
+</div>
+{% endif %}
+   </div>
+   </div>
+{% endblock %}

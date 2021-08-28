@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Recycling;
+use App\Entity\Transformation;
+use App\Entity\Trash;
 use App\Form\RecyclingType;
+use App\Form\TransformationType;
+use App\Form\TrashType;
 use App\Repository\RecyclingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,6 +59,63 @@ class RecyclingController extends AbstractController
     {
         return $this->render('recycling/show.html.twig', [
             'recycling' => $recycling,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/addSecondHandStock", name="add_second_hand_stock", methods={"GET","POST"})
+     */
+    public function addSecondHandStock(Request $request, Recycling $recycling)
+    {
+
+    }
+
+    /**
+     * @Route("/{id}/addTransformation", name="add_transformation", methods={"GET","POST"})
+     */
+    public function addTransformation(Request $request, Recycling $recycling)
+    {
+        $transformation = new Transformation();
+        $formTransformation = $this->createForm(TransformationType::class,$transformation);
+        $formTransformation->handleRequest($request);
+
+        if($formTransformation->isSubmitted() && $formTransformation->isValid())
+        {
+            $entityManager = $this->getDoctrine()->getManager();
+            $recycling->addTransformation($transformation);
+            $entityManager->persist($transformation);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('recycling_show',['id'=>$recycling->getId()]);
+        }
+        return $this->render('transformaton/new.html.twig',[
+            'transformation'=>$transformation,
+            'formTransformation'=>$formTransformation->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/addTrash", name="add_trash", methods={"GET","POST"})
+     */
+    public function addTrash(Request $request, Recycling $recycling)
+    {
+        $trash = new Trash();
+        $formTrash = $this->createForm(TrashType::class, $trash);
+        $formTrash->handleRequest($request);
+
+        if($formTrash->isSubmitted() && $formTrash->isValid())
+        {
+            $entityManager = $this->getDoctrine()->getManager();
+            $recycling->addTrash($trash);
+            $entityManager->persist($trash);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('recycling_show',['id'=>$recycling->getId()]);
+        }
+        return $this->render('trash/new.html.twig',[
+            'trash'=>$trash,
+            'formTrash'=>$formTrash->createView(),
+
         ]);
     }
 

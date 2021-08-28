@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Transformation{% endblock %}
+
+{% block body %}
+<div class="container-fluid list">
+{% form_theme formTransformation 'bootstrap_4_layout.html.twig' %}
+    <h1>Create new Transformation</h1>
+
+    {{ include('transformation/_form.html.twig') }}
+
+    <a class="btn create" href="{{ path('transformation_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
+</div>
+{% endblock %}

@@ -50,6 +50,7 @@ class BikeType extends AbstractType
                 'required'=>false,
             ])
             ->add('weight',NumberType::class,[
+                'label'=>'Weight in kg',
                 'required'=>false,
             ])
            // ->add('source')

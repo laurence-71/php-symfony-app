@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Trashes{% endblock %}
+
+{% block body %}
+<div class="container-fluid list">
+    <h1>Trashes List</h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nature</th>
+                <th>Weight</th>
+                <th>Show</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for trash in trashes %}
+            <tr>
+                <td>{{ trash.id }}</td>
+                <td>{{ trash.nature }}</td>
+                <td>{{ trash.weight }}</td>
+                <td>
+                    <a class="btn create" href="{{ path('trash_show', {'id': trash.id}) }}"><i class="bi bi-info-square"></i></a>
+                    </td>
+                    <td>
+                    {% if is_granted("ROLE_MANAGER") %}
+                        <div>
+                         <a class="btn edit" href="{{ path('trash_edit', {'id': trash.id}) }}"><i class="bi bi-pencil"></i></a>
+                        </div>
+                         {{ include('trash/_delete_form.html.twig') }}
+                    {% else %}
+                        <span col="2">Unauthorized access</span>
+                    {% endif %}
+                   
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    </div>
+{% endblock %}

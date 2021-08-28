@@ -23,7 +23,7 @@ class RepairType extends AbstractType
             ])
             //->add('doneDate')
             ->add('laborCost',NumberType::class,[
-                'label'=>'Labor Cost'
+                'label'=>'Labor Cost in Euro'
             ])
            
             ->add('comments',TextareaType::class,[

@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Billing;
 use App\Entity\Operation;
 use App\Entity\Operator;
+use App\Entity\Recycling;
 use App\Entity\Repair;
 use App\Form\BillingType;
 use App\Form\OperationType;
 use App\Form\OperatorType;
+use App\Form\RecyclingType;
 use App\Form\RepairType;
 use App\Repository\OperationRepository;
 use App\Repository\OperatorRepository;
@@ -145,6 +147,30 @@ class OperationController extends AbstractController
         return $this->render('billing/new.html.twig',[
             'billing'=>$billing,
             'formBilling'=>$formBilling->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/addRecycling", name="add_recycling", methods={"GET", "POST"})
+     */
+    public function addRecycling(Request $request, Operation $operation){
+        $recycling = new Recycling();
+        $formRecycling = $this->createForm(RecyclingType::class, $recycling);
+        $formRecycling->handleRequest($request);
+
+        if($formRecycling->isSubmitted() && $formRecycling->isValid())
+        {
+            $entityManager = $this->getDoctrine()->getManager();
+            $operation->setRecycling($recycling);
+            $entityManager->persist($operation);
+            $entityManager->persist($recycling);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('recycling_show',['id'=>$operation->getId()]);
+        }
+        return $this->render('recycling/new.html.twig',[
+            'recycling'=>$recycling,
+            'formRecycling'=>$formRecycling->createView(),
         ]);
     }
 

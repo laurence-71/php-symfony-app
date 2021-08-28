@@ -2,32 +2,24 @@
 
 namespace App\Form;
 
-use App\Entity\SecondHandStock;
+use App\Entity\Trash;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SecondHandStockType extends AbstractType
+class TrashType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label',TextType::class,[
-                'label'=>'Label'
+            ->add('nature',TextType::class,[
+                'label'=>'Nature'
             ])
-            ->add('brand',TextType::class,[
-                'label'=>'Brand'
+            ->add('weight',NumberType::class,[
+                'label'=>'Weight in kg'
             ])
-            ->add('unit_price',NumberType::class,[
-                'label'=>'Unit Price in Euro',
-                'required'=>false
-            ])
-            ->add('quantity',NumberType::class,[
-                'label'=>'Quantity'
-            ])
-            //->add('requirement')
             //->add('recycling')
         ;
     }
@@ -35,7 +27,7 @@ class SecondHandStockType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => SecondHandStock::class,
+            'data_class' => Trash::class,
         ]);
     }
 }

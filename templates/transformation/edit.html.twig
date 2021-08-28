@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Transformation{% endblock %}
+
+{% block body %}
+<div class="container-fluid fluid">
+{% form_theme formTransformation 'bootstrap_4_layout.html.twig' %}
+    <h1>Edit Transformation</h1>
+
+    {{ include('transformation/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn create" href="{{ path('transformation_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
+
+    {{ include('transformation/_delete_form.html.twig') }}
+    </div>
+{% endblock %}
