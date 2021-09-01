@@ -19,18 +19,19 @@ class SecondHandStockRepository extends ServiceEntityRepository
         parent::__construct($registry, SecondHandStock::class);
     }
 
-    public function findOneByLabelBrandQuantity($label,$brand,$quantity)
+    public function findOneByLabelBrand($label,$brand)
     {
         return $this->createQueryBuilder('s')
         ->andWhere('s.label= :LABEL')
         ->setParameter('LABEL',$label)
         ->andWhere('s.brand= :BRAND')
         ->setParameter('BRAND',$brand)
-        ->andWhere('s.quantity= :QUANTITY')
-        ->setParameter('QUANTITY',$quantity)
+       
         ->getQuery()
         ->getOneOrNullResult();
     }
+
+   
 
     // /**
     //  * @return SecondHandStock[] Returns an array of SecondHandStock objects

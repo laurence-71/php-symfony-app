@@ -47,6 +47,11 @@ class SecondHandStock
      */
     private $recycling;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $requirement_quantity;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +125,18 @@ class SecondHandStock
     public function setRecycling(?Recycling $recycling): self
     {
         $this->recycling = $recycling;
+
+        return $this;
+    }
+
+    public function getRequirementQuantity(): ?int
+    {
+        return $this->requirement_quantity;
+    }
+
+    public function setRequirementQuantity(?int $requirement_quantity): self
+    {
+        $this->requirement_quantity = $requirement_quantity;
 
         return $this;
     }

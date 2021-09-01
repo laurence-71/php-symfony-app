@@ -160,9 +160,10 @@
 		</table>
 		<h2>Requirements</h2>
 		<table class="table table-bordered">
+		
 			{% if repair.requirement !=null %}
 				<thead>
-					<th>New stock article label</th>
+					<th>New article </th>
 					<th>Brand</th>
 					<th>Quantity</th>
 					<th>Unit Price</th>
@@ -174,12 +175,12 @@
 						<tr>
 							<td>{{article.label}}</td>
 							<td>{{article.brand}}</td>
-							<td class="text-end">{{article.quantity}}</td>
+							<td class="text-end">{{article.requirementQuantity}}</td>
 							<td class="text-end">{{article.unitPrice}}
 								€</td>
-							<td class="text-end">{{article.unitPrice * article.quantity}}
+							<td class="text-end">{{article.unitPrice * article.requirementQuantity}}
 								€</td>
-							{% set totalNewStock = totalNewStock + article.unitPrice * article.quantity %}
+							{% set totalNewStock = totalNewStock + article.unitPrice * article.requirementQuantity %}
 						</tr>
 					{% else %}
 						<tr>
@@ -202,12 +203,12 @@
 					<tr>
 						<td>{{article.label}}</td>
 						<td>{{article.brand}}</td>
-						<td class="text-end">{{article.quantity}}</td>
+						<td class="text-end">{{article.requirementQuantity}}</td>
 						<td class="text-end">{{article.unitPrice}}
 							€</td>
-						<td class="text-end">{{article.unitPrice * article.quantity}}
+						<td class="text-end">{{article.unitPrice * article.requirementQuantity}}
 							€</td>
-						{% set totalSecondHandStock = totalSecondHandStock + article.unitPrice * article.quantity %}
+						{% set totalSecondHandStock = totalSecondHandStock + article.unitPrice * article.requirementQuantity %}
 					</tr>
 				{% else %}
 					<tr>

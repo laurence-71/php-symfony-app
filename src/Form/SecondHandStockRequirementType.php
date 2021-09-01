@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SecondHandStockType extends AbstractType
+class SecondHandStockRequirementType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -24,11 +24,11 @@ class SecondHandStockType extends AbstractType
                 'label'=>'Unit Price in Euros',
                 'required'=>false
             ])
-            ->add('quantity',NumberType::class,[
-                'label'=>'Quantity',
+            //->add('quantity')
+            ->add('requirement_quantity',NumberType::class,[
+                'label'=>'Requirement Quantity',
                 'required'=>false
             ])
-            //->add('requirement_quantity')
             //->add('requirement')
             //->add('recycling')
         ;

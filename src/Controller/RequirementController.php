@@ -5,15 +5,19 @@ namespace App\Controller;
 use App\Entity\NewStock;
 use App\Entity\Requirement;
 use App\Entity\SecondHandStock;
+use App\Form\NewStockRequirementType;
 use App\Form\NewStockType;
 use App\Form\RequirementType;
+use App\Form\SecondHandStockRequirementType;
 use App\Form\SecondHandStockType;
 use App\Repository\NewStockRepository;
 use App\Repository\RequirementRepository;
 use App\Repository\SecondHandStockRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -50,7 +54,7 @@ class RequirementController extends AbstractController
 
         return $this->renderForm('requirement/new.html.twig', [
             'requirement' => $requirement,
-            'formRequiremnt' => $formRequirement,
+            'formRequirement' => $formRequirement,
         ]);
     }
 
@@ -61,64 +65,70 @@ class RequirementController extends AbstractController
     {
         return $this->render('requirement/show.html.twig', [
             'requirement' => $requirement,
+          
         ]);
     }
 
     /**
-     * @Route("/{id}/addNewStock", name="add_new_stock", methods={"GET","POST"})
+     * @Route("/{id}/addNewArticle", name="add_new_article", methods={"GET","POST"})
      */
-    public function addNewStock(Request $request,NewStockRepository $newStockRepository ,Requirement $requirement)
-    {
-       $newStock = new NewStock();
-       $formNewStock = $this->createForm(NewStockType::class,$newStock);
-       $formNewStock->handleRequest($request);
+    public function addNewArticle(Request $request,NewStockRepository $newStockRepository, Requirement $requirement)
+    {  
+        $newStock = new NewStock();
+        $formNewStock = $this->createForm(NewStockRequirementType::class, $newStock);
+        $formNewStock->handleRequest($request);
 
-       if($formNewStock->isSubmitted() && $formNewStock->isValid())
-       {
-           $entityManager= $this->getDoctrine()->getManager();
-           $result = $newStockRepository->findOneByLabelBrandQuantity($newStock->getLabel(), $newStock->getBrand(),$newStock->getQuantity());
-           if ($result !=null)
+        if($formNewStock->isSubmitted() && $formNewStock->isValid())
+        {
+            $entityManager = $this->getDoctrine()->getManager();
+            $result = $newStockRepository->findOneByLabelBrand($newStock->getLabel(), $newStock->getBrand());
+         
+            if($result != null)
             {
-              $requirement->addNewStock($result);
-           } else {
-              $requirement->addNewStock($newStock);
-              $entityManager->persist($newStock);
-           }
-           $entityManager->persist($requirement);
-           $entityManager->flush();
-           
-           return $this->redirectToRoute('requirement_show',['id'=>$requirement->getId()]);
-       }
-       return $this->render('new_stock/new.html.twig',[
-           'newStock'=>$newStock,
-           'formNewStock'=>$formNewStock->createView(),
-       ]);
+                $requirement->addNewStock($result);
+                $result->setQuantity($result->getQuantity()-$newStock->getRequirementQuantity());
+                $result->setRequirementQuantity($newStock->getRequirementQuantity());
+            }else{
+                $this->addFlash("message","No  new stock for this article");
+            }
+          
+            $entityManager->persist($requirement);
+            $entityManager->flush();
+            return $this->redirectToRoute('requirement_show',['id'=>$requirement->getId()]);
+        }
+        return $this->render('new_stock/new.html.twig',[
+            'newStock'=>$newStock,
+            
+            'formNewStock'=>$formNewStock->createView(),
+        ]);
     }
 
     /**
-     * @Route("/{id}/addSecondHandStock", name="add_second_hand_stock", methods={"GET","POST"})
+     * @Route("/{id}/addSecondHandArticle", name="add_second_hand_article", methods={"GET","POST"})
      */
-    public function addSecondHandStock(Request $request,SecondHandStockRepository $secondHandStockRepository, Requirement $requirement)
+    public function addSecondHandArticle(Request $request, SecondHandStockRepository $secondHandStockRepository, Requirement $requirement)
     {
         $secondHandStock = new SecondHandStock();
-        $formSecondHandStock = $this->createForm(SecondHandStockType::class,$secondHandStock);
+        $formSecondHandStock = $this->createForm(SecondHandStockRequirementType::class,$secondHandStock);
         $formSecondHandStock->handleRequest($request);
-
+        
         if($formSecondHandStock->isSubmitted() && $formSecondHandStock->isValid())
         {
             $entityManager = $this->getDoctrine()->getManager();
-            $result=$secondHandStockRepository->findOneByLabelBrandQuantity($secondHandStock->getLabel(),$secondHandStock->getBrand(),$secondHandStock->getQuantity());
+            $result = $secondHandStockRepository->findOneByLabelBrand($secondHandStock->getLabel(), $secondHandStock->getBrand());
 
             if($result != null)
             {
                 $requirement->addSecondHandStock($result);
+                $result->setRequirementQuantity($secondHandStock->getRequirementQuantity());
+                $result->setQuantity($result->getQuantity() - $secondHandStock->getRequirementQuantity());
+
             }else{
-                $requirement->addSecondHandStock($secondHandStock);
-                $entityManager->persist($secondHandStock);
+                $this->addFlash('message',"No second-hand stock for this article");
             }
+
             $entityManager->persist($requirement);
             $entityManager->flush();
-
             return $this->redirectToRoute('requirement_show',['id'=>$requirement->getId()]);
         }
         return $this->render('second_hand_stock/new.html.twig',[
@@ -126,9 +136,6 @@ class RequirementController extends AbstractController
             'formSecondHandStock'=>$formSecondHandStock->createView(),
         ]);
     }
-
-
-
 
     /**
      * @Route("/{id}/edit", name="requirement_edit", methods={"GET","POST"})

@@ -5,7 +5,7 @@
 {% block body %}
 <div class="container-fluid list">
     <h1>NewStock List</h1>
-
+{{dump()}}
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -14,6 +14,7 @@
                 <th>Brand</th>
                 <th>Unit Price</th>
                 <th>Quantity</th>
+               
                 <th>Show</th>
                 <th>Actions</th>
             </tr>
@@ -24,8 +25,9 @@
                 <td>{{ new_stock.id }}</td>
                 <td>{{ new_stock.label }}</td>
                 <td>{{ new_stock.brand }}</td>
-                <td>{{ new_stock.unitPrice }}</td>
-                <td>{{ new_stock.quantity }}</td>
+                <td class="text-end">{{ new_stock.unitPrice }} €</td>
+                <td class="text-end"{{ new_stock.quantity }}</td>
+               
                 <td>
                     <a class="btn show" href="{{ path('new_stock_show', {'id': new_stock.id}) }}"><i class="bi bi-info-square"></i></a>
                     </td>
@@ -44,7 +46,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">No records found</td>
+                <td colspan="8">No records found</td>
             </tr>
         {% endfor %}
         </tbody>

@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Recycling;
+use App\Entity\SecondHandStock;
 use App\Entity\Transformation;
 use App\Entity\Trash;
 use App\Form\RecyclingType;
+use App\Form\SecondHandStockType;
 use App\Form\TransformationType;
 use App\Form\TrashType;
 use App\Repository\RecyclingRepository;
+use App\Repository\SecondHandStockRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,11 +66,34 @@ class RecyclingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/addSecondHandStock", name="add_second_hand_stock", methods={"GET","POST"})
+     * @Route("/{id}/addSecondHandStock", name="add_secondHand_stock", methods={"GET","POST"})
      */
-    public function addSecondHandStock(Request $request, Recycling $recycling)
+    public function addSecondHandStock(SecondHandStockRepository $secondHandStockRepository,Request $request, Recycling $recycling)
     {
+        $secondHandStock = new SecondHandStock();
+        $formSecondhandStock = $this->createForm(SecondHandStockType::class,$secondHandStock);
+        $formSecondhandStock->handleRequest($request);
 
+        if($formSecondhandStock->isSubmitted() && $formSecondhandStock->isValid())
+        {
+            $entityManager = $this->getDoctrine()->getManager();
+            $result= $secondHandStockRepository->findOneByLabelBrand($secondHandStock->getLabel(),$secondHandStock->getBrand());
+            if($result != null)
+            {
+                $result->setQuantity($secondHandStock->getQuantity() + $result->getQuantity());
+               $recycling->addSecondHandStock($result);
+                            }else{
+                    $recycling->addSecondHandStock($secondHandStock);
+                    $entityManager->persist($secondHandStock);
+                }
+                $entityManager->persist($recycling);
+                $entityManager->flush();
+                return $this->redirectToRoute('recycling_show',['id'=>$recycling->getId()]);
+        }
+        return $this->render('second_hand_stock/new.html.twig',[
+            'secondHandStock'=>$secondHandStock,
+            'formSecondHandStock'=>$formSecondhandStock->createView(),
+        ]);
     }
 
     /**

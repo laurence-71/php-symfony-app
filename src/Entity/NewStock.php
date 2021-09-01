@@ -42,6 +42,11 @@ class NewStock
      */
     private $requirement;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $requirement_quantity;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class NewStock
     public function setRequirement(?Requirement $requirement): self
     {
         $this->requirement = $requirement;
+
+        return $this;
+    }
+
+    public function getRequirementQuantity(): ?int
+    {
+        return $this->requirement_quantity;
+    }
+
+    public function setRequirementQuantity(?int $requirement_quantity): self
+    {
+        $this->requirement_quantity = $requirement_quantity;
 
         return $this;
     }

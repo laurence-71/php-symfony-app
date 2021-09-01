@@ -21,14 +21,16 @@ class NewStockType extends AbstractType
                 'label'=>'Brand'
             ])
             ->add('unit_price',NumberType::class,[
-                'label'=>'Unit Price in Euro',
+                'label'=>'Unit Price in Euros',
                 'required'=>false,
 
             ])
             ->add('quantity',NumberType::class,[
                 'label'=>'Quantity',
+                'required'=>false,
                 
             ])
+            //->add('requirement_quantity')
            //->add('requirement')
         ;
     }

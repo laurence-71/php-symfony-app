@@ -5,7 +5,9 @@
 {% block body %}
 <div class="container-fluid list">
     <h1>Recycling</h1>
-{{dump()}}
+
+    {{dump()}}
+
     <table class="table table-bordered">
         <tbody>
             <tr>
@@ -27,8 +29,9 @@
             <tr>
             <th>Actions</th>
             <td>
+           
             <div><a class="btn create" href="{{path('add_transformation',{'id':recycling.id})}}"><i class="bi bi-plus-square"> Add to transformation</i></a></div>
-            <div><a class="btn create" href=""><i class="bi bi-plus-square"> Add to second-hand stock</i></a></div>
+            <div><a class="btn create" href="{{path('add_secondHand_stock',{'id':recycling.id})}}"><i class="bi bi-plus-square"> Add to second-hand stock</i></a></div>
             <div><a class="btn create" href="{{path('add_trash',{'id':recycling.id})}}"><i class="bi bi-plus-square"> Put to trash</i></a></div>
 
             </td>

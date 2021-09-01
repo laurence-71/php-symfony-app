@@ -142,7 +142,7 @@ class OperationController extends AbstractController
             $entityManager->persist($operation);
             $entityManager->flush();
 
-            return $this->redirectToRoute('billing_show',['id'=>$operation->getId()]);
+            return $this->redirectToRoute('billing_show',['id'=>$billing->getId()]);
         }
         return $this->render('billing/new.html.twig',[
             'billing'=>$billing,
@@ -166,7 +166,7 @@ class OperationController extends AbstractController
             $entityManager->persist($recycling);
             $entityManager->flush();
 
-            return $this->redirectToRoute('recycling_show',['id'=>$operation->getId()]);
+            return $this->redirectToRoute('recycling_show',['id'=>$recycling->getId()]);
         }
         return $this->render('recycling/new.html.twig',[
             'recycling'=>$recycling,

@@ -11,6 +11,8 @@
             <tr>
                 <th>Id</th>
                 <th>Requirement Date</th>
+               
+
                 <th>Show</th>
                 <th>Actions</th>
             </tr>
@@ -20,6 +22,9 @@
             <tr>
                 <td>{{ requirement.id }}</td>
                 <td>{{ requirement.requirementDate ? requirement.requirementDate|date('Y-m-d H:i:s') : '' }}</td>
+               
+
+               
                 <td>
                     <a class="btn show" href="{{ path('requirement_show', {'id': requirement.id}) }}"><i class="bi bi-info-square"></i></a>
                     </td>
