@@ -39,10 +39,22 @@
             <tr>
             <th>Operations</th>
                 <td>
-                <div>Historic</div>
-                <div>
+                {% for operation in bike.operations %}
+                <div class="row">
+                <div class='col-sm'>
+                Bike has arrived on {{operation.receptionDate|date('Y-m-d H:i')}}
+               </div>
+               <div class="col-sm">
+                <a class="btn show" href="{{path('operation_show',{'id':operation.id})}}"><i class="bi bi-info-square"></i></a>
+                </div>
+              
+                     </div>
+                     
+              
+                {% endfor %}
                 <a class="btn create" href="{{path('add_operation',{'id':bike.id})}}"><i class="bi bi-plus-square"> Add an operation</i></a>
-              </div>
+              
+             
                 </td>
                
            

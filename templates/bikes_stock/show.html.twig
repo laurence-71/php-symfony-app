@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BikesStock{% endblock %}
+
+{% block body %}
+<div class="container-fluid list">
+    <h1>Bike Stock</h1>
+
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ bikes_stock.id }}</td>
+            </tr>
+            <tr>
+                <th>Deposit Date</th>
+                <td>{{ bikes_stock.depositDate ? bikes_stock.depositDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Image Link</th>
+                <td>{{ bikes_stock.image }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+    <div class="col-sm">
+    <a class="btn create" href="{{ path('bikes_stock_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
+    </div>
+    {% if is_granted('ROLE_MANAGER') %}
+    
+    <div class='col-sm'>
+     {{ include('bikes_stock/_delete_form.html.twig') }}
+    <a class="btn edit" href="{{ path('bikes_stock_edit', {'id': bikes_stock.id}) }}"><i class="bi bi-pencil"> Edit</i></a>
+    </div>
+    {% endif %}
+    </div>
+    </div>
+{% endblock %}

@@ -7,9 +7,9 @@
 {% form_theme formNewStock 'bootstrap_4_layout.html.twig' %}
  <h1>Edit NewStock</h1>
     {{ include('new_stock/_form.html.twig', {'button_label': 'Update'}) }}
-
+ {{ include('new_stock/_delete_form.html.twig') }}
     <a class="btn create" href="{{ path('new_stock_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
 
-    {{ include('new_stock/_delete_form.html.twig') }}
+   
     </div>
 {% endblock %}

@@ -8,9 +8,9 @@
     <h1>Edit SecondHandStock</h1>
 
     {{ include('second_hand_stock/_form.html.twig', {'button_label': 'Update'}) }}
-
+  {{ include('second_hand_stock/_delete_form.html.twig') }}
     <a class="btn create" href="{{ path('second_hand_stock_index') }}"><i> Back to list</i></a>
 
-    {{ include('second_hand_stock/_delete_form.html.twig') }}
+  
     </div>
 {% endblock %}

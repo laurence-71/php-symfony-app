@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit BikesStock{% endblock %}
+
+{% block body %}
+<div class="container-fluid list">
+{% form_theme formBikesStock 'bootstrap_4_layout.html.twig' %}
+    <h1>Edit BikesStock</h1>
+
+    {{ include('bikes_stock/_form.html.twig', {'button_label': 'Update'}) }}
+{{ include('bikes_stock/_delete_form.html.twig') }}
+    <a  class="btn create" href="{{ path('bikes_stock_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
+  </div>  
+{% endblock %}

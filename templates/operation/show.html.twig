@@ -38,6 +38,8 @@
             {% if operation.repair != null %}
                <div> Bike has been undertaken the {{operation.repair.takingCareDate|date('Y-m-d H:i')}}</div>
                 <div>Repair has been done the {{operation.repair.doneDate|date('Y-m-d H:i')}}</div>
+            {% elseif operation.recycling !=null %}
+            <div> Bike has been recycled the {{operation.recycling.recyclingDate|date('Y-m-d')}}</div>
             {% endif %}
             
             </td>

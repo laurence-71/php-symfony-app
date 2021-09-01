@@ -49,6 +49,8 @@ class Operation
      */
     private $billing;
 
+   
+
     public function __construct()
     {
         $this->operators = new ArrayCollection();
@@ -145,4 +147,6 @@ class Operation
 
         return $this;
     }
+
+   
 }

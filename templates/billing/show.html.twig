@@ -92,10 +92,10 @@
             <tr>
         <td>{{article.label}}</td>
         <td>{{article.brand}}</td>
-        <td class="text-end">{{article.quantity}}</td>
+        <td class="text-end">{{article.requirementQuantity}}</td>
         <td class="text-end">{{article.unitPrice}} €</td>
-        <td class="text-end">{{article.quantity * article.unitPrice}} €</td>
-        {% set totalNewStock = totalNewStock + article.quantity * article.unitPrice %}
+        <td class="text-end">{{article.requirementQuantity * article.unitPrice}} €</td>
+        {% set totalNewStock = totalNewStock + article.requirementQuantity * article.unitPrice %}
         </tr>
         {% else %}
             <tr>
@@ -117,10 +117,10 @@
             <tr>
             <td>{{article.label}}</td>
             <td>{{article.brand}}</td>
-            <td class="text-end">{{article.quantity}}</td>
+            <td class="text-end">{{article.requirementQuantity}}</td>
             <td class="text-end">{{article.unitPrice}} €</td>
-            <td class="text-end">{{article.quantity * article.unitPrice}} €</td>
-            {% set totalSecondHandStock = totalSecondHandStock + article.quantity * article.unitPrice %}
+            <td class="text-end">{{article.requirementQuantity * article.unitPrice}} €</td>
+            {% set totalSecondHandStock = totalSecondHandStock + article.requirementQuantity * article.unitPrice %}
             </tr>
         {% else %}
             <tr>

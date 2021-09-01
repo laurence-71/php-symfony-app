@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BikesStock index{% endblock %}
+
+{% block body %}
+<div class="container-fluid list">
+    <h1>Bikes Stock </h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Deposit Date</th>
+                <th>Image Link</th>
+                <th>Show</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for bikes_stock in bikes_stocks %}
+            <tr>
+                <td>{{ bikes_stock.id }}</td>
+                <td>{{ bikes_stock.depositDate ? bikes_stock.depositDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ bikes_stock.image }}</td>
+                <td>
+                    <a class="btn show" href="{{ path('bikes_stock_show', {'id': bikes_stock.id}) }}"><i class="bi bi-info-square"></i></a>
+                    </td>
+                    <td>
+                    {% if is_granted("ROLE_MANAGER") %}
+                         <div>
+                    <a class="btn edit" href="{{ path('bikes_stock_edit', {'id': bikes_stock.id}) }}"><i class="bi bi-pencil"></i></a>
+                </div>
+                 {{ include('bikes_stock/_delete_form.html.twig') }}
+                    {% else %}
+                        <span col="2">Unauthorized access</span>
+                    {% endif %}
+                   
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn create" href="{{ path('bikes_stock_new') }}">Create new</a>
+    </div>
+{% endblock %}

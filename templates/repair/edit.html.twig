@@ -8,9 +8,9 @@
     <h1>Edit Repair</h1>
 
     {{ include('repair/_form.html.twig', {'button_label': 'Update'}) }}
-
+ {{ include('repair/_delete_form.html.twig') }}
     <a class="btn create" href="{{ path('repair_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
 
-    {{ include('repair/_delete_form.html.twig') }}
+   
     </div>
 {% endblock %}
