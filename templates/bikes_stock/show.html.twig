@@ -20,6 +20,18 @@
                 <th>Image Link</th>
                 <td>{{ bikes_stock.image }}</td>
             </tr>
+            <tr>
+            <th>Bike</th>
+            <td><div>{{bikes_stock.operation.bike.serialNumber}} 
+            <a class="btn show" href="{{path('bike_show',{'id':bikes_stock.operation.bike.id})}}"><i class="bi bi-info-square"></i></a>
+            </div></td>
+            </tr>
+            <tr>
+            <th>Repair</th>
+            <td><div>{{bikes_stock.operation.repair.takingCareDate|date('Y-m-d H:i')}}
+            <a class="btn show" href="{{path('repair_show',{'id':bikes_stock.operation.repair.id})}}"><i class="bi bi-info-square"></i></a>
+            </div></td>
+            </tr>
         </tbody>
     </table>
     <div class="row">

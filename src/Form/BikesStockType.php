@@ -20,7 +20,8 @@ class BikesStockType extends AbstractType
                 'widget'=>'single_text'
             ])
             ->add('image',TextType::class,[
-                'label'=>'Link to the bike image'
+                'label'=>'Link to the bike image',
+                'required'=>false
             ])
             //->add('operation')
         ;

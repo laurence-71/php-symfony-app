@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+{% block title %}Internal server error{% endblock %}
+{% block body %}
+<div class="container-fluid list">
+<h1>Internal server error</h1>
+<div class="error500">
+<div class="errorText">
+<p >Status error code: {{status_code}}</p>
+<p>Status error message: {{status_text}}</p>
+<p><a class="btn create" href="{{path('app_logout')}}"><i class="bi bi-chevron-left"> Back to login </i></a></p>
+</div>
+</div>
+</div>
+{% endblock %}

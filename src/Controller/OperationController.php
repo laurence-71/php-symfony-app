@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\BikesStock;
 use App\Entity\Billing;
 use App\Entity\Operation;
 use App\Entity\Operator;
 use App\Entity\Recycling;
 use App\Entity\Repair;
+use App\Form\BikesStockType;
 use App\Form\BillingType;
 use App\Form\OperationType;
 use App\Form\OperatorType;
@@ -171,6 +173,32 @@ class OperationController extends AbstractController
         return $this->render('recycling/new.html.twig',[
             'recycling'=>$recycling,
             'formRecycling'=>$formRecycling->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/addBikesStock", name="add_bikes_stock",methods={"GET","POST"})
+     */
+    public function addBikesStock(Request $request, Operation $operation)
+    {
+        $bikesStock = new BikesStock();
+        $formBikesStock = $this->createForm(BikesStockType::class, $bikesStock);
+        $formBikesStock->handleRequest($request);
+
+        if($formBikesStock->isSubmitted() && $formBikesStock->isValid())
+        {
+            $entityManager= $this->getDoctrine()->getManager();
+            $bikesStock->setOperation($operation);
+            $entityManager->persist($bikesStock);
+            $entityManager->persist($operation);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('bikes_stock_show',['id'=>$bikesStock->getId()]);
+
+        }
+        return $this->render('bikes_stock/new.html.twig',[
+            'bikesStock'=>$bikesStock,
+            'formBikesStock'=>$formBikesStock->createView(),
         ]);
     }
 
