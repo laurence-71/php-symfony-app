@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Bike;
 use App\Entity\Source;
 use App\Form\BikeType;
+use App\Form\SearchSourceType;
 use App\Form\SourceType;
 use App\Repository\SourceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,6 +25,27 @@ class SourceController extends AbstractController
     {
         return $this->render('source/index.html.twig', [
             'sources' => $sourceRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/search", name="search_source", methods={"GET", "POST"})
+     */
+    public function searchByOrigin(Request $request, SourceRepository $sourceRepository)
+    {
+        $source = new Source();
+        $formSearchSource = $this->createForm(SearchSourceType::class, $source);
+        $formSearchSource->handleRequest($request);
+
+        if($formSearchSource->isSubmitted() && $formSearchSource->isValid())
+        {
+            $results = $sourceRepository->findByOrigin($source->getOrigin());
+        }else{
+            $results = [];
+        }
+        return $this->render('source/search.html.twig',[
+            'results'=>$results,
+            'formSearchSource'=>$formSearchSource->createView(),
         ]);
     }
 

@@ -19,6 +19,33 @@ class OperationRepository extends ServiceEntityRepository
         parent::__construct($registry, Operation::class);
     }
 
+    public function countByDate()
+    {
+        return $this->createQueryBuilder('o')
+        ->select('SUBSTRING(o.receptionDate,1,10) as operationDate , COUNT(o) as operationCount')
+        ->groupBy('operationDate')
+        ->getQuery()->getResult();
+    }
+
+    public function countRepairByDate()
+    {
+        return $this->createQueryBuilder('o')
+        ->select('COUNT(o.repair) as repairCount')
+        ->groupBy('o.receptionDate')
+        ->getQuery()->getResult();
+       
+    }
+
+    public function countRecyclingByDate()
+    {
+        return $this->createQueryBuilder('o')
+        ->select('COUNT(o.recycling) as recyclingCount')
+        ->groupBy('o.receptionDate')
+        ->getQuery()->getResult();
+    }
+
+    
+
     // /**
     //  * @return Operation[] Returns an array of Operation objects
     //  */

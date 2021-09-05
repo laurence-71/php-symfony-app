@@ -88,7 +88,7 @@ label{
 
 h1{
     text-align: center;
-    margin-top: 5%;
+    margin-top:15px;
     font-size: 40px;
     border:rgb(205, 205, 231) solid 2px;
     border-radius: 10px;
@@ -99,6 +99,7 @@ h1{
 }
 
 h2{
+   margin-top:15px;
     color:rgb(205, 205, 231);
     border:rgb(205, 205, 231) solid 2px;
     border-radius: 10px;

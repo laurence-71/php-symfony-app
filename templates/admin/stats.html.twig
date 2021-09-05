@@ -1,0 +1,102 @@
+{% extends "base.html.twig" %}
+{% block title %}Stats{% endblock %}
+{% block styleSheet %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" referrerpolicy="no-referrer" >
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid list">
+<h1>Stats</h1>
+<canvas id="operation" width="400" height="100"></canvas>
+</div>
+{% endblock %}
+{% block javascripts %}
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script >
+let ctx = document.getElementById('operation');
+let labelOperation = {{operationDates|raw}};
+
+let operationGraph = new Chart(ctx,{
+   type:'bar',
+   
+    data:{ 
+         labels:labelOperation,
+        datasets:[
+            {
+               
+            label:"Operation",
+            data:{{operationCount|raw}},
+           
+             borderColor:
+           'rgb(51,211,255)'
+        ,
+        borderWidth:1 , 
+        type:'line',
+        order:1
+        },
+        {
+            type:'bar',
+            label:'Repairs',
+            data:{{repairCount|raw}},
+            backgroundColor:'rgb(255,51,136)',
+            borderColor:
+                 'rgb(132,60,85)'
+            ,
+            borderWidth:1,
+            barThickness:10,
+        },
+        {
+            type:'bar',
+            label:'Recycling',
+            data:{{recyclingCount|raw}},
+            backgroundColor:'rgb(51,255,173)',
+            borderColor:
+                 'rgb(60;132,88)'
+            ,
+            borderWidth:1,
+            barThickness:10,
+        },
+        ],
+    },
+     options: { 
+         legend:{
+             position:'bottom',
+            labels:{
+                fontColor:'rgb(205,205,241)'
+            }
+         },
+         title:{
+             display:true,
+             text:'Operation Chart',
+             fontColor:'rgb(205,205,241)'
+         },
+        scales: {
+            yAxes:[
+                {
+                     ticks:{
+                       fontColor:"rgb(205,205,241)",
+                   }
+                },
+                {
+                beginAtZero: true,
+            },
+            ], 
+           xAxes:[
+              
+               {   
+                  
+                   ticks:{
+                       fontColor:"rgb(205,205,241)",
+                   }
+               },
+              
+              
+           ],
+        }, 
+    }
+})
+</script>
+
+{% endblock %}

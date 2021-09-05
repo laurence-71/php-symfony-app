@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\EditUserType;
+use App\Repository\OperationRepository;
+use App\Repository\RepairRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
  /**
      * @Route("/admin", name="admin_")
@@ -24,7 +27,42 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("userList", name="users", methods={"GET"})
+     * @Route("/stats", name="stats", methods={"GET","POST"})
+     */
+    public function stats(OperationRepository $operationRepository)
+    {
+        $operations = $operationRepository->countByDate();
+        $repairs = $operationRepository->countRepairByDate();
+        $recyclings = $operationRepository->countRecyclingByDate();
+        $operationDates =[];
+        $operationCount=[];
+        $repairCount=[];
+        $recyclingCount=[];
+        foreach($operations as $operation)
+        {
+            $operationDates[]=$operation['operationDate'];
+            $operationCount[]=$operation['operationCount'];
+        }
+
+        foreach($repairs as $repair)
+        {
+            $repairCount[]=$repair['repairCount'];
+        }
+        foreach($recyclings as $recycling)
+        {
+            $recyclingCount[]=$recycling['recyclingCount'];
+        }
+      
+      return $this->render('admin/stats.html.twig',[
+            'operationDates'=>json_encode($operationDates),
+            'operationCount'=>json_encode($operationCount),
+            'repairCount'=>json_encode($repairCount),
+            'recyclingCount'=>json_encode($recyclingCount),
+      ]);
+    }
+
+    /**
+     * @Route("/userList", name="users", methods={"GET"})
      */
     public function usersList(UserRepository $userRepository)
     {

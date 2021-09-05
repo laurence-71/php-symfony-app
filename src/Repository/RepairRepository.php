@@ -19,6 +19,7 @@ class RepairRepository extends ServiceEntityRepository
         parent::__construct($registry, Repair::class);
     }
 
+  
     // /**
     //  * @return Repair[] Returns an array of Repair objects
     //  */

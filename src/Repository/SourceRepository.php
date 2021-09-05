@@ -19,6 +19,14 @@ class SourceRepository extends ServiceEntityRepository
         parent::__construct($registry, Source::class);
     }
 
+    public function findByOrigin($origin)
+    {
+        return $this->createQueryBuilder('s')
+        ->andWhere('s.origin LIKE :ORIGIN')
+        ->orderBy('s.origin','ASC')
+        ->setParameter('ORIGIN','%'.$origin. '%')
+        ->getQuery()->getResult();
+    }
 
     // /**
     //  * @return Source[] Returns an array of Source objects

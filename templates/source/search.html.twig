@@ -1,0 +1,57 @@
+{% extends "base.html.twig" %}
+{% block title %}Search Source{% endblock %}
+{% block body %}
+<div class="container-fluid list">
+{% form_theme formSearchSource 'bootstrap_4_layout.html.twig' %}
+<h1>
+{{form_start(formSearchSource)}}
+			
+			{{form_widget(formSearchSource)}}
+			<button type="submit" class="btn create">
+				<i class="bi bi-search"> Search</i>
+			</button>
+			{{form_end(formSearchSource)}}
+		</h1>
+</h1>
+</div>
+<div class= "container-fluid list">
+<h2>Results</h2>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Origin</th>
+<th>Purpose</th>
+<th>Deposit Date</th>
+<th>Contact</th>
+<th>Bikes</th>
+</tr>
+</thead>
+<tbody>
+{% if results != null %}
+{% for source in results %}
+       <tr>
+
+<td>{{source.origin}}</td>
+<td>{{source.purpose}}</td>
+<td>{{source.depositDate|date('Y-m-d H:i')}}</td>
+<td>{{source.email}}</td>
+<td>
+{% for bike in source.bikes %}
+    {{bike.serialNumber}}
+{% endfor %}
+</td>
+</tr>
+{% endfor %}
+ 
+{% else %}
+    <tr>
+    <td colspan="5"> No record found</td>
+    </tr>
+{% endif %}
+
+
+</tbody>
+</table>
+<a class="btn create" href="{{path('source_index')}}"><i class="bi bi-chevron-left"> Back to list</i></a>
+</div>
+{% endblock %}
