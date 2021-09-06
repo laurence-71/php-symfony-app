@@ -13,7 +13,7 @@
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
 			
 			<link rel="stylesheet" href="./../../../assets/app.css" media="screen"/>
-			<link rel="stylesheet" href="" media="print"/>
+			<link rel="stylesheet" href="#" media="print"/>
 			<link rel="apple-touch-icon" sizes="180x180" href="./../../../assets/ressources/favicon/apple-touch-icon.png">
 			<link rel="icon" type="image/png" sizes="32x32" href="./../../../assets/ressources/favicon/favicon-32x32.png">
 			<link rel="icon" type="image/png" sizes="16x16" href="./../../../assets/ressources/favicon/favicon-16x16.png">
@@ -24,8 +24,6 @@
 			name="theme-color" content="#ffffff">
 		{#{{ encore_entry_link_tags('app') }}#}
 		{% endblock %}
-
-
 	</head>
 	<body>
 		<div class="container-nav">
@@ -65,10 +63,7 @@
 													<a class="dropdown-item" href="{{path('bike_index')}}">Bike</a>
 												</li>
 												<li>
-
 													Operations
-
-
 													<ul>
 														<li><a class="dropdown-item"href="{{path('operation_index')}}">Operation</a></li>
 														<li><a class="dropdown-item"href="{{path('repair_index')}}">Repair work</a></li>
@@ -77,10 +72,7 @@
 
 												</li>
 												<li>
-
 													Stocks
-
-
 													<ul>
 														<li><a class="dropdown-item"href="{{path('new_stock_index')}}">New article stock</a></li>
 														<li><a class="dropdown-item"href="{{path('second_hand_stock_index')}}">Second-hand article stock</a></li>
@@ -121,7 +113,6 @@
 												</li>
 												<li>
 													<ul>
-
 														Operations
 														<li>
 															<a class="dropdown-item" href="{{path('operation_index')}}">Operation</a>
@@ -132,11 +123,8 @@
 														<li>
 															<a class="dropdown-item" href="{{path('recycling_index')}}">Recycling</a>
 														</li>
-
 													</ul>
-
 													<ul>
-
 														Stocks
 														<li>
 															<a class="dropdown-item" href="{{path('new_stock_index')}}">New article stock</a>
@@ -147,13 +135,11 @@
 														<li>
 															<a class="dropdown-item" href="{{path('bikes_stock_index')}}">Bike stock</a>
 														</li>
-
 													</ul>
 												</li>
 											</ul>
 										</li>
 									</ul>
-
 								</div>
 							{% endif %}
 						</div>

@@ -114,7 +114,7 @@ class RecyclingController extends AbstractController
 
             return $this->redirectToRoute('recycling_show',['id'=>$recycling->getId()]);
         }
-        return $this->render('transformaton/new.html.twig',[
+        return $this->render('transformation/new.html.twig',[
             'transformation'=>$transformation,
             'formTransformation'=>$formTransformation->createView(),
         ]);

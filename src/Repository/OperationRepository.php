@@ -31,7 +31,8 @@ class OperationRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('o')
         ->select('COUNT(o.repair) as repairCount')
-        ->groupBy('o.receptionDate')
+        ->addSelect('SUBSTRING(o.receptionDate,1,10) as operationDate')
+        ->groupBy('operationDate')
         ->getQuery()->getResult();
        
     }
@@ -40,7 +41,8 @@ class OperationRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('o')
         ->select('COUNT(o.recycling) as recyclingCount')
-        ->groupBy('o.receptionDate')
+        ->addSelect('SUBSTRING(o.receptionDate,1,10) as operationDate')
+        ->groupBy('operationDate')
         ->getQuery()->getResult();
     }
 

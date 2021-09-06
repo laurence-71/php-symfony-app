@@ -181,3 +181,5 @@ https://127.0.0.1:8000/index.php/_error/404
 * Update the route of the links in the base.html.twig
 
 # Start to build the app 
+
+The app takes care of all the process of repair, recycling a bike, article requirements . In the admin I put the beginning of a statistic management with ChartJS ; I used version 2.9.3 instead of symfony/UX-chartJS . 

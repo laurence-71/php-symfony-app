@@ -63,7 +63,7 @@ class SourceController extends AbstractController
             $entityManager->persist($source);
             $entityManager->flush();
 
-            return $this->redirectToRoute('source_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('source_show', ['id'=>$source->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('source/new.html.twig', [

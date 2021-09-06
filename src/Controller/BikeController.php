@@ -41,7 +41,7 @@ class BikeController extends AbstractController
             $entityManager->persist($bike);
             $entityManager->flush();
 
-            return $this->redirectToRoute('bike_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('bike_show', ['id'=>$bike->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('bike/new.html.twig', [

@@ -100,7 +100,7 @@ class RepairController extends AbstractController
             $entityManager->persist($bikeArticle);
             $entityManager->flush();
 
-            return $this->redirectToRoute('bike_article_show',['id'=>$repair->getId()]);
+            return $this->redirectToRoute('bike_article_show',['id'=>$bikeArticle->getId()]);
         }
         return $this->render('bike_article/new.html.twig',[
             'bikeArticle'=>$bikeArticle,

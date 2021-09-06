@@ -2,6 +2,10 @@
 
 {% block title %}User{% endblock %}
 {% block body %}
+
 				<h1 class="title">Hello {{app.user.firstName}}</h1>
+				<div class='text-center'>
+				<a class="btn create" href="{{path('search_source')}}">Start the process</a>
+				</div>
 {% endblock %}
 
