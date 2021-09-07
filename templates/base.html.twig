@@ -7,11 +7,12 @@
 			{% endblock %}
 		</title>
 		{# Run `composer require symfony/webpack-encore-bundle`
-												           and uncomment the following Encore helpers to start using Symfony UX #}
+														           and uncomment the following Encore helpers to start using Symfony UX #}
 		{% block stylesheets %}
 			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
-			
+
 			<link rel="stylesheet" href="./../../../assets/app.css" media="screen"/>
 			<link rel="stylesheet" href="#" media="print"/>
 			<link rel="apple-touch-icon" sizes="180x180" href="./../../../assets/ressources/favicon/apple-touch-icon.png">
@@ -40,7 +41,7 @@
 											<a class="nav-link active" aria-current="page" href="{{path('admin_users')}}">Users List</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link"  href="{{path('admin_stats')}}">Stats</a>
+											<a class="nav-link" href="{{path('admin_stats')}}">Stats</a>
 										</li>
 										<li class="nav-item">
 											<a class="nav-link" href="{{path('user_index')}}">Home</a>
@@ -57,13 +58,22 @@
 											</a>
 											<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 												<li>
-													<a class="dropdown-item" href="{{path('source_index')}}">Source</a>
+													<strong>Sources</strong>
+													<ul>
+														<li><a class="dropdown-item"href="{{path('source_index')}}">Source List</a></li>
+														<li><a class="dropdown-item"href="{{path('search_source')}}">Search By Origin</a></li>
+													</ul>
 												</li>
 												<li>
-													<a class="dropdown-item" href="{{path('bike_index')}}">Bike</a>
+													<strong>Bikes</strong>
+													<ul>
+														<li><a class="dropdown-item"href="{{path('bike_index')}}">Bike List</a></li>
+														<li><a class="dropdown-item"href="{{path('search_number')}}">Search By Serial Number</a></li>
+														<li><a class="dropdown-item"href="{{path('search_category')}}">Search By Category</a></li>
+													</ul>
 												</li>
 												<li>
-													Operations
+													<strong>Operations</strong>
 													<ul>
 														<li><a class="dropdown-item"href="{{path('operation_index')}}">Operation</a></li>
 														<li><a class="dropdown-item"href="{{path('repair_index')}}">Repair work</a></li>
@@ -72,11 +82,11 @@
 
 												</li>
 												<li>
-													Stocks
+													<strong>Stocks</strong>
 													<ul>
 														<li><a class="dropdown-item"href="{{path('new_stock_index')}}">New article stock</a></li>
 														<li><a class="dropdown-item"href="{{path('second_hand_stock_index')}}">Second-hand article stock</a></li>
-														<li><a class="dropdown-item" href="{{path('bikes_stock_index')}}">Bike stock</a></li>
+														<li><a class="dropdown-item"href="{{path('bikes_stock_index')}}">Bike stock</a></li>
 													</ul>
 
 												</li>
@@ -106,52 +116,53 @@
 											</a>
 											<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 												<li>
-													<a class="dropdown-item" href="{{path('source_index')}}">Source</a>
-												</li>
-												<li>
-													<a class="dropdown-item" href="{{path('bike_index')}}">Bike</a>
-												</li>
-												<li>
+													<strong>Sources</strong>
 													<ul>
-														Operations
-														<li>
-															<a class="dropdown-item" href="{{path('operation_index')}}">Operation</a>
-														</li>
-														<li>
-															<a class="dropdown-item" href="{{path('repair_index')}}">Repair work</a>
-														</li>
-														<li>
-															<a class="dropdown-item" href="{{path('recycling_index')}}">Recycling</a>
-														</li>
-													</ul>
-													<ul>
-														Stocks
-														<li>
-															<a class="dropdown-item" href="{{path('new_stock_index')}}">New article stock</a>
-														</li>
-														<li>
-															<a class="dropdown-item" href="{{path('second_hand_stock_index')}}">Second-hand article stock</a>
-														</li>
-														<li>
-															<a class="dropdown-item" href="{{path('bikes_stock_index')}}">Bike stock</a>
-														</li>
+														<li><a class="dropdown-item"href="{{path('source_index')}}">Source List</a></li>
+														<li><a class="dropdown-item"href="{{path('search_source')}}">Search By Origin</a></li>
 													</ul>
 												</li>
-											</ul>
+												<li>
+													<strong>Bikes</strong>
+													<ul>
+														<li><a class="dropdown-item"href="{{path('bike_index')}}">Bike List</a></li>
+														<li><a class="dropdown-item"href="{{path('search_number')}}">Search By Serial Number</a></li>
+														<li><a class="dropdown-item"href="{{path('search_category')}}">Search By Category</a></li>
+													</ul>
+												</li>
+												<li>
+													<strong>Operations</strong>
+													<ul>
+
+														<li><a class="dropdown-item"href="{{path('operation_index')}}">Operation</a></li>
+														<li><a class="dropdown-item"href="{{path('repair_index')}}">Repair work</a></li>
+														<li><a class="dropdown-item"href="{{path('recycling_index')}}">Recycling</a></li>
+													</ul>
+												</li>
+												<li>
+													<strong>Stocks</strong>
+													<ul>
+
+														<li><a class="dropdown-item"href="{{path('new_stock_index')}}">New article stock</a></li>
+														<li><a class="dropdown-item"href="{{path('second_hand_stock_index')}}">Second-hand article stock</a></li>
+														<li><a class="dropdown-item"href="{{path('bikes_stock_index')}}">Bike stock</a></li>
+													</ul>
+												</li>
+											</li>
 										</li>
 									</ul>
-								</div>
-							{% endif %}
+								</li>
+							</ul>
 						</div>
-					</nav>
+					{% endif %}
 				</div>
-				{% block body %}{% endblock %}
-				{% block javascripts %}
-					<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-					{#{{ encore_entry_script_tags('app') }}#}
-				
-				{% endblock %}
-			</body>
-		</body>
+			</nav>
+		</div>
+		{% block body %}{% endblock %}
+		{% block javascripts %}
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+			{#{{ encore_entry_script_tags('app') }}#}
+
+		{% endblock %}
 	</body>
-</html>
+</html></body></body></html>

@@ -21,10 +21,17 @@ class SourceController extends AbstractController
     /**
      * @Route("/", name="source_index", methods={"GET"})
      */
-    public function index(SourceRepository $sourceRepository): Response
+    public function index(Request $request,SourceRepository $sourceRepository): Response
     {
+        $limit = 5;
+        $page = (int)$request->query->get("page",1);
+        $sources = $sourceRepository->getPaginatedSource($page,$limit);
+        $total = $sourceRepository->getTotalSource();
         return $this->render('source/index.html.twig', [
-            'sources' => $sourceRepository->findAll(),
+            'sources' => $sources,
+            'limit'=>$limit,
+            'page'=>$page,
+            'total'=>$total,
         ]);
     }
 

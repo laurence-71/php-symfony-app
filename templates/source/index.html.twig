@@ -50,7 +50,39 @@
         {% endfor %}
         </tbody>
     </table>
-
     <a class="btn create" href="{{ path('source_new') }}">Create new</a>
+   {% set totalpage = (total / limit)|round(0, 'ceil') %}
+  {% if totalpage != 0 %}
+<div class="container-fluid list">
+  <ul class="pagination justify-content-center">
+   <li class=" page-item {{(page == 1) ?'disabled visually-hidden' : ''}}">
+ <a class="page-link " href="?page=1 " aria-label="Previous">
+        <span aria-hidden="true"><i class="bi bi-skip-backward"></i></span>
+      </a>
+      </li>
+    <li class="page-item {{(page == 1) ?'disabled visually-hidden' : ''}}">
+    
+      <a class="page-link" href="{{(page > 1) ? '?page=' ~ (page - 1)  : ''}}" aria-label="Previous">
+        <span aria-hidden="true"><i class="bi bi-chevron-left"></i></span>
+      </a>
+    </li>
+    {% for element in 1..totalpage %}
+         <li class="page-item {{(page == element) ? 'active ':''}}" aria-current ="page">
+         <a class="page-link" href="?page={{element}}">{{element}}</a></li>
+    {% endfor %}
+   
+   <li class="page-item {{(page == totalpage) ?'disabled visually-hidden' : ''}}">
+      <a class="page-link" href="{{(page < totalpage ) ? '?page=' ~ (page + 1) : ''}}" aria-label="Next">
+        <span aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
+      </a>
+    </li>
+     <li class="page-item {{(page == totalpage) ?'disabled visually-hidden' : ''}}">
+      <a class="page-link" href="?page={{totalpage }}" aria-label="Next">
+        <span aria-hidden="true"><i class="bi bi-skip-forward"></i></span>
+      </a>
+    </li>
+  </ul>
+</div>
+{% endif %}
     </div>
 {% endblock %}

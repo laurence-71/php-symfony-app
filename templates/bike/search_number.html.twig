@@ -1,0 +1,63 @@
+{% extends "base.html.twig" %}
+{% block title %}Search Serial Number
+{% endblock %}
+{% block body %}
+	{% form_theme formSearchNumber 'bootstrap_4_layout.html.twig' %}
+	<div class="container-fluid list">
+		<h1>
+			{{form_start(formSearchNumber)}}
+			{{form_widget(formSearchNumber)}}
+			<button type="submit" class="btn create">
+				<i class="bi bi-search">
+					Search</i>
+			</button>
+			{{form_end(formSearchNumber)}}
+		</h1>
+	</div>
+	<div class="container-fluid list">
+		<h2>
+			Result</h2>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Serial Number</th>
+					<th>Brand</th>
+					<th>Category</th>
+					<th>Color</th>
+					<th>Size</th>
+					<th>Weight</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% if result !=null %}
+					<tr>
+						<td>{{result.serialNumber}}</td>
+						<td>{{result.brand}}</td>
+						<td>{{result.category}}</td>
+						<td>{{result.color}}</td>
+						<td>{{result.size}}</td>
+						<td>{{result.weight}}</td>
+						<td>
+							<a class="btn show" href="{{path('bike_show',{'id':result.id})}}">
+								<i class="bi bi-info-square"></i>
+							</a>
+						</td>
+
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="7">
+							No result for this number</td>
+					</tr>
+				{% endif %}
+
+			</tbody>
+		</table>
+		<a class="btn create" href="{{path('bike_index')}}">
+			<i class="bi bi-chevron-left">
+				Back to list</i>
+		</a>
+	</div>
+
+{% endblock %}

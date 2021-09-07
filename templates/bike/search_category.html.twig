@@ -1,0 +1,85 @@
+{% extends "base.html.twig" %}
+{% block title %}Search By Category{% endblock %}
+{% block body %}
+{% form_theme formSearchCategory 'bootstrap_4_layout.html.twig' %}
+<div class="container-fluid list">
+<h1>
+{{form_start(formSearchCategory)}}
+			{{form_widget(formSearchCategory)}}
+			 <button type="submit" class="btn create"><i class="bi bi-search"> Search</i></button>
+			{{form_end(formSearchCategory)}}
+</h1>
+</div>
+<div class="container-fluid list">
+<h2> Results for 
+{% for bike in results %}
+    {{bike.category}}
+{% endfor %}
+</h2>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Serial Number</th>
+<th>Brand</th>
+<th>Color</th>
+<th>Size</th>
+<th>Weight</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+{% for bike in results %}
+    <tr>
+<td>{{bike.serialNumber}}</td>
+<td>{{bike.brand}}</td>
+<td>{{bike.color}}</td>
+<td>{{bike.size}}</td>
+<td>{{bike.weight}}</td>
+<td>
+<a class="btn show" href="{{path('bike_show',{'id':bike.id})}}"><i class="bi bi-info-square"></i></a>
+</td>
+</tr>
+{% else %}
+    <tr>
+    <td colspan="6"> No record found for this category</td>
+    </tr>
+{% endfor %}
+
+</tbody>
+</table>
+<a class="btn create" href="{{path('bike_index')}}"><i class="bi bi-chevron-left"> Back to list</i></a>
+ {% set totalpage = (total / limit )|round(0, 'ceil') %}
+{% if totalpage != 0 %}
+  <div class="container">
+    <ul class="pagination justify-content-center">
+   <li class=" page-item {{(page == 1) ?'disabled visually-hidden' : ''}}">
+ <a class="page-link " href="?page=1 " aria-label="Previous">
+        <span aria-hidden="true"><i class="bi bi-skip-backward"></i></span>
+      </a>
+      </li>
+    <li class="page-item {{(page == 1) ?'disabled visually-hidden' : ''}}">
+    
+      <a class="page-link" href="{{(page > 1) ? '?page=' ~ (page - 1)  : ''}}" aria-label="Previous">
+        <span aria-hidden="true"><i class="bi bi-chevron-left"></i></span>
+      </a>
+    </li>
+    {% for element in 1..totalpage %}
+         <li class="page-item {{(page == element) ? 'active ':''}}" aria-current ="page">
+         <a class="page-link" href="?page={{element}}">{{element}}</a></li>
+    {% endfor %}
+   
+   <li class="page-item {{(page == totalpage) ?'disabled visually-hidden' : ''}}">
+      <a class="page-link" href="{{(page < totalpage ) ? '?page=' ~ (page + 1) : ''}}" aria-label="Next">
+        <span aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
+      </a>
+    </li>
+     <li class="page-item {{(page == totalpage) ?'disabled visually-hidden' : ''}}">
+      <a class="page-link" href="?page={{totalpage }}" aria-label="Next">
+        <span aria-hidden="true"><i class="bi bi-skip-forward"></i></span>
+      </a>
+    </li>
+  </ul>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -6,6 +6,8 @@ use App\Entity\Bike;
 use App\Entity\Operation;
 use App\Form\BikeType;
 use App\Form\OperationType;
+use App\Form\SearchBikeCategoryType;
+use App\Form\SearchBikeNumberType;
 use App\Repository\BikeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,10 +22,67 @@ class BikeController extends AbstractController
     /**
      * @Route("/", name="bike_index", methods={"GET"})
      */
-    public function index(BikeRepository $bikeRepository): Response
+    public function index(Request $request,BikeRepository $bikeRepository): Response
     {
+        $limit=5;
+        $page=(int)$request->query->get("page",1);
+        $bikes = $bikeRepository->getPaginatedBike($page,$limit);
+        $total = $bikeRepository->getTotalBike();
+
         return $this->render('bike/index.html.twig', [
-            'bikes' => $bikeRepository->findAll(),
+            'bikes' => $bikes,
+            'limit'=>$limit,
+            'page'=>$page,
+            'total'=>$total,
+        ]);
+    }
+
+    /**
+     * @Route("/searchNumber", name="search_number", methods={"GET","POST"})
+     */
+    public function searchNumber(Request $request,BikeRepository $bikeRepository)
+    {
+        $bike = new Bike();
+        $formSearchNumber = $this->createForm(SearchBikeNumberType::class, $bike);
+        $formSearchNumber->handleRequest($request);
+
+        if($formSearchNumber->isSubmitted() && $formSearchNumber->isValid())
+        {
+            $result = $bikeRepository->findOneBySerialNumber($bike->getSerialNumber());
+        }else{
+            $result=[];
+        }
+        return $this->render('bike/search_number.html.twig',[
+            'result'=>$result,
+            'formSearchNumber'=>$formSearchNumber->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/searchCategory", name="search_category", methods={"GET","POST"})
+     */
+    public function searchCategory(Request $request,BikeRepository $bikeRepository)
+    {
+        $bike = new Bike();
+        $limit = 5;
+        $page=(int)$request->query->get("page",1);
+
+        $formSearchCategory = $this->createForm(SearchBikeCategoryType::class, $bike);
+        $formSearchCategory->handleRequest($request);
+
+        if($formSearchCategory->isSubmitted() && $formSearchCategory->isValid())
+        {
+            $results = $bikeRepository->findByCategory($bike->getCategory(), $page, $limit);
+        }else{
+            $results = [];
+        }
+        $total = count($results);
+        return $this->render('bike/search_category.html.twig',[
+            'results'=>$results,
+            'limit'=>$limit,
+            'page'=>$page,
+            'total'=>$total,
+            'formSearchCategory'=>$formSearchCategory->createView(),
         ]);
     }
 

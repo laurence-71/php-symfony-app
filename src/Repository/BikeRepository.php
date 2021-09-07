@@ -19,6 +19,42 @@ class BikeRepository extends ServiceEntityRepository
         parent::__construct($registry, Bike::class);
     }
 
+    public function findOneBySerialNumber($serialNumber)
+    {
+        return $this->createQueryBuilder('b')
+        ->andWhere('b.serialNumber= :BIKENUMBER')
+        ->setParameter('BIKENUMBER',$serialNumber)
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
+
+    public function findByCategory($category,$page,$limit)
+    {
+        return $this->createQueryBuilder('b')
+        ->andWhere('b.category= :CATEGORY')
+        ->orderBy('b.size','ASC')
+        ->setParameter('CATEGORY',$category)
+        ->setFirstResult(($page * $limit)-$limit)
+        ->setMaxResults($limit)
+        ->getQuery()->getResult();
+    }
+
+    public function getPaginatedBike($page,$limit)
+    {
+        return $this->createQueryBuilder('b')
+        ->orderBy('b.brand','ASC')
+        ->setFirstResult(($page * $limit) - $limit)
+        ->setMaxResults($limit)
+        ->getQuery()->getResult();
+    }
+
+    public function getTotalBike()
+    {
+        return $this->createQueryBuilder('b')
+        ->select('COUNT(b)')
+        ->getQuery()->getSingleScalarResult();
+    }
+
     // /**
     //  * @return Bike[] Returns an array of Bike objects
     //  */

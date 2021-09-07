@@ -37,7 +37,10 @@
 <td>{{source.email}}</td>
 <td>
 {% for bike in source.bikes %}
-    {{bike.serialNumber}}
+    <div>
+	{{bike.serialNumber}}
+	<a class="btn show" href="{{path('bike_show',{'id':bike.id})}}"><i class="bi bi-info-square"></i></a>
+	</div>
 {% endfor %}
 </td>
 </tr>

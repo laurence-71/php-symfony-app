@@ -28,7 +28,23 @@ class SourceRepository extends ServiceEntityRepository
         ->getQuery()->getResult();
     }
 
-    
+    public function getPaginatedSource($page, $limit)
+    {
+        return $this->createQueryBuilder('s')
+        ->orderBy('s.origin','ASC')
+        ->setFirstResult(($page * $limit) - $limit)
+        ->setMaxResults($limit)
+        ->getQuery()->getResult();
+    }
+
+    public function getTotalSource()
+    {
+        return $this->createQueryBuilder('s')
+        ->select('COUNT(s)')
+        ->getQuery()->getSingleScalarResult();
+    }
+
+
     // /**
     //  * @return Source[] Returns an array of Source objects
     //  */

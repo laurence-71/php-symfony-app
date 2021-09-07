@@ -113,6 +113,12 @@ h2{
     border-radius: 10px;
 }
 
+.page-link{
+    background-color: rgb(205,205,231)!important;
+    color:rgb(73, 73, 77) !important;
+    border-radius: 10px !important;
+    border:rgb(73, 73, 77) solid 1px !important;
+}
 
 .bikeImg{
     height:100%;
