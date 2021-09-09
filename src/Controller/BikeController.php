@@ -9,9 +9,11 @@ use App\Form\OperationType;
 use App\Form\SearchBikeCategoryType;
 use App\Form\SearchBikeNumberType;
 use App\Repository\BikeRepository;
+use App\Repository\SourceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -36,6 +38,41 @@ class BikeController extends AbstractController
             'total'=>$total,
         ]);
     }
+
+    /**
+     * @Route("/export", name="export_bike_csv")
+     */
+    public function export(BikeRepository $bikeRepository):Response
+    {
+        $bikeList = $bikeRepository->findAll();
+        $response = new StreamedResponse();
+        $response->setCallback(
+            function() use($bikeList){
+                $handle = fopen('php://output', 'w+');
+                fputs($handle, $bom=(chr(0xEF) . chr(0xBB) . chr(0xBF)));
+                fputcsv($handle,['Id','Serial Number','Brand','Category','Size','Color','Weight']);
+                foreach($bikeList as $bike)
+                {
+                    $data=[
+                        $bike->getId(),
+                        $bike->getSerialNumber(),
+                        $bike->getBrand(),
+                        $bike->getCategory(),
+                        $bike->getSize(),
+                        $bike->getColor(),
+                        $bike->getWeight(),
+                    ];
+                    fputcsv($handle,$data);
+                }
+                fclose($handle);
+            }
+        );
+        $response->headers->set('Content-Type', 'text/csv; charset=UTF-8');
+        $response->headers->set('Content-disposition','attachment;filename=Bike.csv');
+        return $response;
+    }
+
+   
 
     /**
      * @Route("/searchNumber", name="search_number", methods={"GET","POST"})

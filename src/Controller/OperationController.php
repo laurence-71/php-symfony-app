@@ -14,6 +14,7 @@ use App\Form\OperationType;
 use App\Form\OperatorType;
 use App\Form\RecyclingType;
 use App\Form\RepairType;
+use App\Form\SearchOperationType;
 use App\Repository\OperationRepository;
 use App\Repository\OperatorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,10 +30,43 @@ class OperationController extends AbstractController
     /**
      * @Route("/", name="operation_index", methods={"GET"})
      */
-    public function index(OperationRepository $operationRepository): Response
+    public function index(Request $request,OperationRepository $operationRepository): Response
     {
+        $limit=5;
+        $page=(int)$request->query->get("page",1);
+        $operations = $operationRepository->getPaginatedOperation($page,$limit);
+        $total=$operationRepository->getTotalOperation();
+
         return $this->render('operation/index.html.twig', [
-            'operations' => $operationRepository->findAll(),
+            'operations' => $operations,
+            'limit'=>$limit,
+            'page'=>$page,
+            'total'=>$total,
+        ]);
+    }
+
+    /**
+     * @Route("/searchOperation", name="search_operation", methods={"GET","POST"})
+     */
+    public function searchOperation(Request $request,OperationRepository $operationRepository)
+    {
+        $operation = new Operation();
+     
+
+        $formSearchOperation = $this->createForm(SearchOperationType::class,$operation);
+        $formSearchOperation->handleRequest($request);
+
+        if($formSearchOperation->isSubmitted() && $formSearchOperation->isValid())
+        {
+            $results = $operationRepository->findByDate($operation->getReceptionDate());
+        }else{
+            $results = [];
+        }
+       
+        return $this->render('operation/search_date.html.twig',[
+            'results'=>$results,
+          
+            'formSearchOperation'=>$formSearchOperation->createView(),
         ]);
     }
 

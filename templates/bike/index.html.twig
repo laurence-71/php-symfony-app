@@ -53,7 +53,7 @@
         </tbody>
     </table>
 
-   
+    <a class="btn create" href="{{path('export_bike_csv')}}"><i class="bi bi-arrow-right"> Export CSV</i></a>
      {% set totalpage = (total / limit)|round(0, 'ceil') %}
   {% if totalpage != 0 %}
 <div class="container-fluid list">

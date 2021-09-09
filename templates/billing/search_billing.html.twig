@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+{% block title %}Search Billing
+{% endblock %}
+{% block body %}
+	{% form_theme formSearchBilling 'bootstrap_4_layout.html.twig' %}
+	<div class="container-fluid list">
+		<h1>
+			{{form_start(formSearchBilling)}}
+			{{form_widget(formSearchBilling)}}
+			<button type="submit" class="btn create">
+				<i class="bi bi-search">
+					Search</i>
+			</button>
+			{{form_end(formSearchBilling)}}
+		</h1>
+	</div>
+	<div class="container-fluid list">
+		<h2>Results</h2>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Billing Number</th>
+					<th>Date of billing</th>
+					<th>Show</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for billing in results %}
+					<tr>
+						<td>{{billing.id}}</td>
+						<td>{{billing.billingDate|date('Y-m-d')}}</td>
+						<td>
+							<a class="btn show" href="{{path('billing_show',{'id':billing.id})}}">
+								<i class="bi bi-info-square"></i>
+							</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="3">No record found for this date</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<a class="btn create" href="{{path('billing_index')}}">
+			<i class="bi bi-chevron-left">
+				Back to List</i>
+		</a>
+	</div>
+{% endblock %}

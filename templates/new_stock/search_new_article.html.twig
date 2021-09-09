@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+{% block title %}Search new Article{% endblock %}
+{% block body %}
+<div class="container-fluid list">
+{% form_theme formSearchNewArticle 'bootstrap_4_layout.html.twig' %}
+<h1>
+{{form_start(formSearchNewArticle)}}
+{{form_widget(formSearchNewArticle)}}
+    <button type="submit" class="btn create">
+				<i class="bi bi-search"> Search</i>
+			</button>
+{{form_end(formSearchNewArticle)}}
+</h1>
+</div>
+<div class="container-fluid list">
+<h2>Results</h2>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th> Article Label</th>
+<th> Brand</th>
+<th> Unit Price</th>
+<th> Stock Quantity</th>
+</tr>
+</thead>
+<tbody>
+{% if results != null %}
+{% for article in results %}
+    <tr>
+    <td>{{article.label}}</td>
+    <td>{{article.brand}}</td>
+    <td class="text-end">{{article.unitPrice}} €</td>
+    <td class="text-end">{{article.quantity}}</td>
+
+    </tr>
+    {% else %}
+        <tr>
+        <td colspan="4"> No article found for this label</td>
+        </tr>
+{% endfor %}
+{% endif %}
+
+</tbody>
+</table>
+<a class="btn create" href="{{path('new_stock_index')}}"><i class="bi bi-chevron-left"> Back to list</i></a>
+</div>
+{% endblock %}

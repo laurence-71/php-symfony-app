@@ -11,6 +11,7 @@ use App\Repository\SourceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -33,6 +34,40 @@ class SourceController extends AbstractController
             'page'=>$page,
             'total'=>$total,
         ]);
+    }
+
+     /**
+     * @Route("/export", name="export_source_csv")
+     */
+    public function export(SourceRepository $sourceRepository):Response
+    {
+        $sourceList = $sourceRepository->findAll();
+        $response = new StreamedResponse();
+        $response->setCallback(
+            function() use($sourceList){
+                $handle = fopen('php://output','w+');
+                fputs($handle, $bom=(chr(0xEF) . chr(0xBB) . chr(0xBF)));
+                fputcsv($handle,['Id','Origin','Purpose','Deposit Date','Phone Number','Email','Address']);
+                foreach($sourceList as $source)
+                {
+                    $data=[
+                        $source->getId(),
+                        $source->getOrigin(),
+                        $source->getPurpose(),
+                        $source->getDepositDate()->format('Y-m-d'),
+                        $source->getTelephone(),
+                        $source->getEmail(),
+                        $source->getAddress(),
+                      
+                    ];
+                    fputcsv($handle,$data);
+                }
+                fclose($handle);
+            }
+        );
+        $response->headers->set('Content-Type', 'text/csv; charset=UTF-8');
+        $response->headers->set('Content-disposition','attachment;filename=Source.csv');
+        return $response;
     }
 
     /**

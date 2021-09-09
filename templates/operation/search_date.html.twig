@@ -1,0 +1,73 @@
+{% extends "base.html.twig" %}
+{% block title %}Search Operation
+{% endblock %}
+{% block body %}
+	{% form_theme formSearchOperation 'bootstrap_4_layout.html.twig' %}
+	<div class="container-fluid list">
+		<h1>
+			{{form_start(formSearchOperation)}}
+			{{form_widget(formSearchOperation)}}
+			<button type="submit" class="btn create">
+				<i class="bi bi-search">
+					Search</i>
+			</button>
+			{{form_end(formSearchOperation)}}
+		</h1>
+	</div>
+
+	<div class="container-fluid list">
+		<h2>Results</h2>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Reception Date</th>
+					<th>Bike</th>
+					<th>Destination</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for operation  in results %}
+					<tr>
+						<td>{{operation.receptionDate|date('Y-m-d H:i')}}</td>
+						<td>
+							<a class="btn show" href="{{path('bike_show',{'id':operation.bike.id})}}">
+								<i class="bi bi-info-square"></i>
+							</a>
+						</td>
+						<td>
+							{% if operation.recycling != null %}
+								<div>Recycled the
+									{{operation.recycling.recyclingDate|date('Y-m-d')}}
+									<a class="btn show" href="{{path('recycling_show',{'id':operation.recycling.id})}}">
+										<i class="bi bi-info-square"></i>
+									</a>
+								</div>
+							{% elseif operation.repair != null %}
+
+								<div>Put in repair the
+									{{operation.repair.takingCareDate|date('Y-m-d')}}
+									<a class="btn show" href="{{path('repair_show',{'id':operation.repair.id})}}">
+										<i class="bi bi-info-square"></i>
+									</a>
+								</div>
+
+							{% endif %}
+						</td>
+
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="3">No record found for this date</td>
+					</tr>
+				{% endfor %}
+
+			</tbody>
+		</table>
+		<a class="btn create" href="{{path('operation_index')}}">
+			<i class="bi bi-chevron-left">
+				Back to list</i>
+		</a>
+
+	</div>
+
+{% endblock %}

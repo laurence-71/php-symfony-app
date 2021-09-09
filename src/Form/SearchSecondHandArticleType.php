@@ -2,20 +2,19 @@
 
 namespace App\Form;
 
-use App\Entity\Source;
+use App\Entity\SecondHandStock;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SearchSourceType extends AbstractType
+class SearchSecondHandArticleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('origin',SearchType::class,[
-                'label'=>'Search Origin'
+            ->add('label',SearchType::class,[
+                'label'=>'Search Second-Hand Article',
             ])
            
         ;
@@ -24,7 +23,7 @@ class SearchSourceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Source::class,
+            'data_class' => SecondHandStock::class,
         ]);
     }
 }

@@ -31,6 +31,15 @@ class NewStockRepository extends ServiceEntityRepository
         ->getOneOrNullResult();
     }
 
+    public function findByLabel($label)
+    {
+        return $this->createQueryBuilder('n')
+        ->andWhere('n.label LIKE :LABEL')
+        ->orderBy('n.label','ASC')
+        ->setParameter('LABEL','%' . $label . '%')
+        ->getQuery()->getResult();
+    }
+
     // /**
     //  * @return NewStock[] Returns an array of NewStock objects
     //  */

@@ -46,6 +46,32 @@ class OperationRepository extends ServiceEntityRepository
         ->getQuery()->getResult();
     }
 
+    public function findByDate($receptionDate)
+    {
+        return $this->createQueryBuilder('o')
+        ->andWhere('o.receptionDate BETWEEN :DATE AND :NOW')
+        ->setParameter('DATE',$receptionDate->format('Y-m-d 00:00'))
+        ->setParameter('NOW',new \DateTime('NOW'))
+        ->orderBy('o.receptionDate','DESC')
+       
+        ->getQuery()->getResult();
+    }
+
+    public function getPaginatedOperation($page,$limit)
+    {
+        return $this->createQueryBuilder('o')
+        ->orderBy('o.receptionDate','DESC')
+        ->setFirstResult(($page * $limit) - $limit)
+        ->setMaxResults($limit)
+        ->getQuery()->getResult();
+    }
+
+    public function getTotalOperation()
+    {
+        return $this->createQueryBuilder('o')
+        ->select('COUNT(o)')
+        ->getQuery()->getSingleScalarResult();
+    }
     
 
     // /**

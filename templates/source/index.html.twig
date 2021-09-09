@@ -51,6 +51,7 @@
         </tbody>
     </table>
     <a class="btn create" href="{{ path('source_new') }}">Create new</a>
+   <a class="btn create" href="{{path('export_source_csv')}}"><i class="bi bi-arrow-right"> Export CSV</i></a>
    {% set totalpage = (total / limit)|round(0, 'ceil') %}
   {% if totalpage != 0 %}
 <div class="container-fluid list">

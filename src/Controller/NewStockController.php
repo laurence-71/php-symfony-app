@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\NewStock;
 use App\Form\NewStockType;
+use App\Form\SearchNewArticleType;
 use App\Repository\NewStockRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +26,27 @@ class NewStockController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("searchNewArticle", name="search_new_article", methods={"GET","POST"})
+     */
+    public function searchNewArticle(Request $request, NewStockRepository $newStockRepository)
+    {
+        $newStock = new NewStock();
+        $formSearchNewArticle = $this->createForm(SearchNewArticleType::class, $newStock);
+        $formSearchNewArticle->handleRequest($request);
+
+        if($formSearchNewArticle->isSubmitted() && $formSearchNewArticle->isValid())
+        {
+            $results = $newStockRepository->findByLabel($newStock->getLabel());
+        }else{
+            $results = [];
+        }
+        return $this->render('new_stock/search_new_article.html.twig',[
+            'results'=>$results,
+            'formSearchNewArticle'=>$formSearchNewArticle->createView(),
+        ]);
+    }
+    
     /**
      * @Route("/new", name="new_stock_new", methods={"GET","POST"})
      */

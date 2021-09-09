@@ -19,6 +19,32 @@ class BillingRepository extends ServiceEntityRepository
         parent::__construct($registry, Billing::class);
     }
 
+    public function findByDate($billingDate)
+    {
+        return $this->createQueryBuilder('b')
+        ->andWhere('b.billingDate BETWEEN :DATE AND :NOW')
+        ->setParameter('DATE',$billingDate->format('Y-m-d 00:00'))
+        ->setParameter('NOW',new \DateTime('NOW'))
+        ->orderBy('b.billingDate','DESC')
+        ->getQuery()->getResult();
+    }
+
+    public function getPaginatedBilling($page,$limit)
+    {
+        return $this->createQueryBuilder('b')
+        ->orderBy('b.billingDate','DESC')
+        ->setFirstResult(($page * $limit) - $limit)
+        ->setMaxResults($limit)
+        ->getQuery()->getResult();
+    }
+
+    public function getTotalBilling()
+    {
+        return $this->createQueryBuilder('b')
+        ->select('COUNT(b)')
+        ->getQuery()->getSingleScalarResult();
+    }
+
     // /**
     //  * @return Billing[] Returns an array of Billing objects
     //  */

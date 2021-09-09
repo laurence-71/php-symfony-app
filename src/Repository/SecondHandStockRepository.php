@@ -31,6 +31,15 @@ class SecondHandStockRepository extends ServiceEntityRepository
         ->getOneOrNullResult();
     }
 
+    public function findByLabel($label)
+    {
+        return $this->createQueryBuilder('s')
+        ->andWhere('s.label LIKE :LABEL')
+        ->orderBy('s.label', 'ASC')
+        ->setParameter('LABEL', '%' . $label . '%')
+        ->getQuery()->getResult();
+    }
+
    
 
     // /**

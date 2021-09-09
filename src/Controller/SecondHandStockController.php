@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\SecondHandStock;
+use App\Form\SearchSecondHandArticleType;
 use App\Form\SecondHandStockType;
 use App\Repository\SecondHandStockRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +23,27 @@ class SecondHandStockController extends AbstractController
     {
         return $this->render('second_hand_stock/index.html.twig', [
             'second_hand_stocks' => $secondHandStockRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/searchSecondhandArticle",name="search_second_hand_article", methods={"GET","POST"})
+     */
+    public function searchSecondHandArticle(Request $request, SecondHandStockRepository $secondHandStockRepository)
+    {
+        $secondHandStock = new SecondHandStock();
+        $formSearchSecondHandArticle = $this->createForm(SearchSecondHandArticleType::class,$secondHandStock);
+        $formSearchSecondHandArticle->handleRequest($request);
+
+        if($formSearchSecondHandArticle->isSubmitted() && $formSearchSecondHandArticle->isValid())
+        {
+            $results = $secondHandStockRepository->findByLabel($secondHandStock->getLabel());
+        }else{
+            $results = [];
+        }
+        return $this->render('second_hand_stock/search_second_hand_article.html.twig',[
+            'results'=>$results,
+            'formSearchSecondHandArticle'=>$formSearchSecondHandArticle->createView(),
         ]);
     }
 

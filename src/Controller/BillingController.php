@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Billing;
 use App\Form\BillingType;
+use App\Form\SearchBillingType;
 use App\Repository\BillingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,10 +19,39 @@ class BillingController extends AbstractController
     /**
      * @Route("/", name="billing_index", methods={"GET"})
      */
-    public function index(BillingRepository $billingRepository): Response
+    public function index(Request $request,BillingRepository $billingRepository): Response
     {
+        $limit = 5;
+        $page=(int)$request->query->get("page",1);
+        $billings = $billingRepository->getPaginatedBilling($page,$limit);
+        $total = $billingRepository->getTotalBilling();
+
         return $this->render('billing/index.html.twig', [
-            'billings' => $billingRepository->findAll(),
+            'billings' => $billings,
+            'page'=>$page,
+            'limit'=>$limit,
+            'total'=>$total,
+        ]);
+    }
+
+    /**
+     * @Route("/searchBilling", name="search_billing", methods={"GET","POST"})
+     */
+    public function searchBilling(Request $request, BillingRepository $billingRepository)
+    {
+        $billing = new Billing();
+        $formSearchBilling = $this->createForm(SearchBillingType::class,$billing);
+        $formSearchBilling->handleRequest($request);
+
+        if($formSearchBilling->isSubmitted() && $formSearchBilling->isValid())
+        {
+            $results = $billingRepository->findByDate($billing->getBillingDate());
+        }else{
+            $results = [];
+        }
+        return $this->render('billing/search_billing.html.twig',[
+            'results'=>$results,
+            'formSearchBilling'=>$formSearchBilling->createView(),
         ]);
     }
 
