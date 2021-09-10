@@ -23,21 +23,33 @@ class RepairController extends AbstractController
     /**
      * @Route("/", name="repair_index", methods={"GET"})
      */
-    public function index(RepairRepository $repairRepository): Response
+    public function index(Request $request,RepairRepository $repairRepository): Response
     {
+        $limit = 5;
+        $page = (int)$request->query->get("page",1);
+        $repairs = $repairRepository->getPaginatedRepair($page,$limit);
+        $total=$repairRepository->getTotalRepair();
         return $this->render('repair/index.html.twig', [
-            'repairs' => $repairRepository->findAll(),
+            'repairs' => $repairs,
+            'limit'=>$limit,
+            'page'=>$page,
+            'total'=>$total,
         ]);
     }
 
     /**
      * @Route("/currentRepairList", name="current_repair_list", methods={"GET"})
      */
-    public function currentRepairList(RepairRepository $repairRepository)
+    public function currentRepairList(Request $request,RepairRepository $repairRepository)
     {
+        $limit = 5;
+        $page=(int)$request->query->get("page",1);
+        $totalCurrentRepair=$repairRepository->getTotalCurrentRepair();
         return $this->render('repair/currentRepairList.html.twig',[
             'currentRepairList'=>$repairRepository->findBy(["validation"=>null],["takingCareDate"=>"DESC"]),
-
+            'limit'=>$limit,
+            'page'=>$page,
+            'total'=>$totalCurrentRepair,
         ]);
     }
 

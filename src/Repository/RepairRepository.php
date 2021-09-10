@@ -18,7 +18,29 @@ class RepairRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Repair::class);
     }
+    
+    public function getPaginatedRepair($page, $limit)
+    {
+        return $this->createQueryBuilder('r')
+        ->orderBy('r.takingCareDate','DESC')
+        ->setFirstResult(($page * $limit) -$limit)
+        ->setMaxResults($limit)
+        ->getQuery()->getResult();
+    }
 
+    public function getTotalRepair()
+    {
+        return $this->createQueryBuilder('r')
+        ->select('COUNT(r)')
+        ->getQuery()->getSingleScalarResult();
+    }
+
+    public function getTotalCurrentRepair()
+    {
+        return $this->createQueryBuilder('r')
+        ->select('COUNT(r.validation)')
+        ->getQuery()->getSingleScalarResult();
+    }
   
     // /**
     //  * @return Repair[] Returns an array of Repair objects

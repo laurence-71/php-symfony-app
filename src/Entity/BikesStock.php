@@ -28,9 +28,11 @@ class BikesStock
     private $image;
 
     /**
-     * @ORM\OneToOne(targetEntity=Operation::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Operation::class, mappedBy="bikesStock", cascade={"persist", "remove"})
      */
     private $operation;
+
+   
 
     public function getId(): ?int
     {
@@ -68,8 +70,20 @@ class BikesStock
 
     public function setOperation(?Operation $operation): self
     {
+        // unset the owning side of the relation if necessary
+        if ($operation === null && $this->operation !== null) {
+            $this->operation->setBikesStock(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($operation !== null && $operation->getBikesStock() !== $this) {
+            $operation->setBikesStock($this);
+        }
+
         $this->operation = $operation;
 
         return $this;
     }
+
+   
 }

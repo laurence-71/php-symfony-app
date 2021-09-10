@@ -49,6 +49,11 @@ class Operation
      */
     private $billing;
 
+    /**
+     * @ORM\OneToOne(targetEntity=BikesStock::class, inversedBy="operation", cascade={"persist", "remove"})
+     */
+    private $bikesStock;
+
    
 
     public function __construct()
@@ -144,6 +149,18 @@ class Operation
     public function setBilling(?Billing $billing): self
     {
         $this->billing = $billing;
+
+        return $this;
+    }
+
+    public function getBikesStock(): ?BikesStock
+    {
+        return $this->bikesStock;
+    }
+
+    public function setBikesStock(?BikesStock $bikesStock): self
+    {
+        $this->bikesStock = $bikesStock;
 
         return $this;
     }

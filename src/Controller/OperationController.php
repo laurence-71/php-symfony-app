@@ -222,7 +222,7 @@ class OperationController extends AbstractController
         if($formBikesStock->isSubmitted() && $formBikesStock->isValid())
         {
             $entityManager= $this->getDoctrine()->getManager();
-            $bikesStock->setOperation($operation);
+          $operation->setBikesStock($bikesStock);
             $entityManager->persist($bikesStock);
             $entityManager->persist($operation);
             $entityManager->flush();
