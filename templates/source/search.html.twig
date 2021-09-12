@@ -41,7 +41,10 @@
 	{{bike.serialNumber}}
 	<a class="btn show" href="{{path('bike_show',{'id':bike.id})}}"><i class="bi bi-info-square"></i></a>
 	</div>
+
+
 {% endfor %}
+	<div><a class="btn create" href="{{path('add_bike',{'id':source.id})}}"><i class="bi bi-plus-square"> Add a bike</i></a></div>
 </td>
 </tr>
 {% endfor %}

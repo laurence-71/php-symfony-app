@@ -22,7 +22,7 @@
             </tr>
             <tr>
                 <th>Labor Cost</th>
-                <td>{{ repair.laborCost }}</td>
+                <td>{{ repair.laborCost }} €</td>
             </tr>
            
             <tr>
@@ -37,10 +37,27 @@
             </tr>
             <tr>
                 <th>Validation</th>
-                <td>{{ repair.validation ? 'Yes' : 'No' }}</td>
+                <td>
+                {% if repair.validation != true %}
+                  
+                    <div><a class="btn create" href="{{path('repair_validation',{'id':repair.id})}}">Validate</a></div>
+               {% else %}
+                    {% if repair.operation.billing != null %}
+                        Repair has been billed the {{repair.operation.billing.billingDate|date('Y-m-d')}}
+                    {% elseif repair.operation.bikesStock != null %}
+                        Bike has been put in stock the {{repair.operation.bikesStock.depositDate|date('Y-m-d')}}
+                    {% else %}
+                      <div><a class="btn create" href="{{path('add_operator',{'id':repair.operation.id})}}"><i class="bi bi-plus-square"> Add operators</i></a></div>
+                     <div><a class="btn create" href="{{path('add_billing',{'id':repair.operation.id})}}"><i class="bi bi-plus-square"> Billing</i></a></div>
+                    <div><a class="btn create" href="{{path('add_bikes_stock',{'id':repair.operation.id})}}"><i class="bi bi-plus-square"> Add to bike stock</i></a></div>
+                    {% endif %}
+                   
+               {% endif %}
+                </td>
             </tr>
         </tbody>
     </table>
+   
     <div class="row">
     <div class="col-sm">
     <a class="btn create" href="{{ path('repair_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>

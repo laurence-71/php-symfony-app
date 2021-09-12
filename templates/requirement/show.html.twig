@@ -9,6 +9,7 @@
 			{{message}}
 		</div>
 	{% endfor %}
+	{{dump()}}
 	<div class="container-fluid list">
 		<h1>Requirement</h1>
 
@@ -58,11 +59,16 @@
 
 							</tbody>
 						</table>
-						<a class="btn create" href="{{path('add_new_article',{'id':requirement.id})}}">
+						{% if requirement.repair.validation == true %}
+							Repair is validate
+						{% else %}
+							<a class="btn create" href="{{path('add_new_article',{'id':requirement.id})}}">
 							<i class="bi bi-plus-square">
 								Add new stock articles
 							</i>
 						</a>
+						{% endif %}
+						
 					</td>
 				</tr>
 				<tr>
@@ -95,10 +101,15 @@
                             </tbody>
 
 						</table>
-						<a class="btn create" href="{{path('add_second_hand_article',{'id':requirement.id})}}">
+						{% if requirement.repair.validation == true %}
+							Repair is validate
+						{% else %}
+								<a class="btn create" href="{{path('add_second_hand_article',{'id':requirement.id})}}">
 							<i class="bi bi-plus-square">
 								Add second-hand articles</i>
 						</a>
+						{% endif %}
+					
 					</td>
 				</tr>
 

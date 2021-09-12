@@ -141,7 +141,7 @@ class SourceController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('message', "The bike has been added with success");
-            return $this->redirectToRoute('source_show',['id'=>$source->getId()]);
+            return $this->redirectToRoute('bike_show',['id'=>$bike->getId()]);
         }
         return $this->render('bike/new.html.twig',[
             'bike'=>$bike,

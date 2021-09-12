@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\BikeArticle;
+use App\Entity\Operation;
 use App\Entity\Repair;
 use App\Entity\Requirement;
 use App\Form\BikeArticleType;
@@ -160,7 +161,7 @@ class RepairController extends AbstractController
             $entityManager->persist($repair);
             $entityManager->flush();
 
-            return $this->redirectToRoute('operation_show',['id'=>$repair->getId()]);
+            return $this->redirectToRoute('repair_show',['id'=>$repair->getId()]);
         }
         return $this->render('repair/validation.html.twig',[
             'repairValidation'=>$repair,

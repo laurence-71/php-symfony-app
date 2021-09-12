@@ -1,132 +1,193 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Operation{% endblock %}
+{% block title %}Operation
+{% endblock %}
 
 {% block body %}
-<div class="container-fluid list">
-{% for message in app.flashes('message') %}
-    <div class="alert alert-success" role="alert">{{message}}</div>
-{% endfor %}
-    <h1>Operation</h1>
+	<div class="container-fluid list">
+		{% for message in app.flashes('message') %}
+			<div class="alert alert-success" role="alert">{{message}}</div>
+		{% endfor %}
+		<h1>Operation</h1>
 
-    <table class="table table-bordered ">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ operation.id }}</td>
-            </tr>
-            <tr>
-                <th>Bike Informations</th>
-                <td>
-                <a class="btn show" href="{{path('bike_show',{'id':operation.bike.id})}}"><i class="bi bi-info-square"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <th>Reception Date</th>
-                <td>{{ operation.receptionDate ? operation.receptionDate|date('Y-m-d H:i') : '' }}</td>
-            </tr>
-            <tr>
-            <th>Details</th>
-            <td>
-            <div>
-            {% if operation.operators !=null %}
-            {% for operator in operation.operators %}
-                <div>{{operator.role}}  {{operator.firstName}} {{operator.lastName}}</div>
-            {% endfor %}
-            {% endif %}
-            </div>
-            {% if operation.repair != null %}
-               <div> Bike has been undertaken the {{operation.repair.takingCareDate|date('Y-m-d H:i')}}
-               <a class="btn show" href="{{path('repair_show',{'id':operation.repair.id})}}"><i class="bi bi-info-square"></i></a>
-               </div>
-                {% if operation.repair.doneDate != null %}
-                      <div>Repair has been done the {{operation.repair.doneDate|date('Y-m-d H:i')}}</div>
-                      {% if operation.billing != null %}
-                           <div><a class="btn show" href="{{path('billing_show',{'id':operation.billing.id})}}"><i class="bi bi-info-square"> Bill</i></a></div>
-                    
-                      {% elseif operation.bikesStock != null %}
-                   
-                          <div>
-                            Bike has been put in stock the {{operation.bikesStock.depositDate|date('Y-m-d H:i')}}
-                            <a class="btn show" href="{{path('bikes_stock_show',{'id':operation.bikesStock.id})}}"><i class="bi bi-info-square"></i></a></div>
-                   {% endif %}
-                {% endif %}
-              
-            {% elseif operation.recycling !=null %}
-            <div> Bike has been recycled the {{operation.recycling.recyclingDate|date('Y-m-d')}}
-            <a class="btn show" href="{{path('recycling_show',{'id':operation.recycling.id})}}"><i class="bi bi-info-square"></i></a>
-            </div>
-            {% endif %}
-            
-            </td>
-            </tr>
-            <tr>
-            <th>Actions</th>
-            <td>
-            {% if operation.recycling !=null %}
-                <div>This bike has been recycled</div>
-                {% elseif operation.repair != null %}
-                {% if operation.repair.validation == true %}
-                    <div>Repair is finish</div>
-                    {% if operation.billing != null %}
-                          <div>This operation is finish and billed</div>
-                    {% else %}
-                          <div>
-           <a class="btn create" href="{{path('add_billing',{'id':operation.id})}}"><i class="bi bi-plus-square"> Billing</i></a>
-           </div>
-           <div>
-           <a class="btn create" href="{{path('add_bikes_stock',{'id':operation.id})}}"><i class="bi bi-plus-square"> Add bike to stock</i></a>
-           </div>
-                    {% endif %}
-                    
-                {% else %}
-                     <div>This bike is on repair work</div>
-                <div>   <a class="btn create" href="{{path('add_operator',{'id':operation.id})}}"><i class="bi bi-plus-square"> Add operators</i></a></div>
-              <div>
-           <a class="btn create" href="{{path('add_billing',{'id':operation.id})}}"><i class="bi bi-plus-square"> Billing</i></a>
-           </div>
-           <div>
-           <a class="btn create" href="{{path('add_bikes_stock',{'id':operation.id})}}"><i class="bi bi-plus-square"> Add bike to stock</i></a>
-           </div>
-                {% endif %}
-               
-         
-         
-          
-            {% else %}
-                 <div>
+		<table class="table table-bordered ">
+			<tbody>
+				<tr>
+					<th>Id</th>
+					<td>{{ operation.id }}</td>
+				</tr>
+				<tr>
+					<th>Bike Informations</th>
+					<td>
+						<a class="btn show" href="{{path('bike_show',{'id':operation.bike.id})}}">
+							<i class="bi bi-info-square"></i>
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<th>Reception Date</th>
+					<td>{{ operation.receptionDate ? operation.receptionDate|date('Y-m-d H:i') : '' }}</td>
+				</tr>
+				<tr>
+					<th>Details</th>
+					<td>
+						<div>
+							{% if operation.operators !=null %}
+								{% for operator in operation.operators %}
+									<div>{{operator.role}}
+										{{operator.firstName}}
+										{{operator.lastName}}</div>
+								{% endfor %}
+							{% endif %}
+						</div>
+						{% if operation.repair != null %}
+							<div>
+								Bike has been undertaken the
+								{{operation.repair.takingCareDate|date('Y-m-d H:i')}}
+								<a class="btn show" href="{{path('repair_show',{'id':operation.repair.id})}}">
+									<i class="bi bi-info-square"></i>
+								</a>
+							</div>
+							{% if operation.repair.doneDate != null %}
+								<div>Repair has been done the
+									{{operation.repair.doneDate|date('Y-m-d H:i')}}</div>
+								{% if operation.billing != null %}
+									<div>
+										<a class="btn show" href="{{path('billing_show',{'id':operation.billing.id})}}">
+											<i class="bi bi-info-square">
+												Bill</i>
+										</a>
+									</div>
 
-             <a class="btn create" href="{{path('add_operator',{'id':operation.id})}}"><i class="bi bi-plus-square"> Add operators</i></a>
-            </div>
-            <div>
-            <a class="btn create" href="{{path('add_repair',{'id':operation.id})}}"><i class="bi bi-plus-square"> Add a repair work</i></a>
-           </div>
-            <div>
-            <a class="btn create" href="{{path('add_recycling',{'id':operation.id})}}"><i class="bi bi-plus-square"> Add a recycling work</i></a>
-           </div>
-           <div>
-           <a class="btn create" href="{{path('add_billing',{'id':operation.id})}}"><i class="bi bi-plus-square"> Billing</i></a>
-           </div>
-           <div>
-           <a class="btn create" href="{{path('add_bikes_stock',{'id':operation.id})}}"><i class="bi bi-plus-square"> Add bike to stock</i></a>
-           </div>
-            {% endif %}
-            
-            </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="row">
-    <div class="col-sm">
-    <a class="btn create" href="{{ path('operation_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
-    </div>
-    {% if is_granted('ROLE_MANAGER') %}
-     <div class="col-sm">
-     {{ include('operation/_delete_form.html.twig') }}
-    <a class="btn edit" href="{{ path('operation_edit', {'id': operation.id}) }}"><i class="bi bi-pencil"> Edit</i></a>
-    </div>
-    {% endif %}
-    </div>
-    </div>
-    {{dump()}}
+								{% elseif operation.bikesStock != null %}
+
+									<div>
+										Bike has been put in stock the
+										{{operation.bikesStock.depositDate|date('Y-m-d H:i')}}
+										<a class="btn show" href="{{path('bikes_stock_show',{'id':operation.bikesStock.id})}}">
+											<i class="bi bi-info-square"></i>
+										</a>
+									</div>
+								{% endif %}
+							{% endif %}
+
+						{% elseif operation.recycling !=null %}
+							<div>
+								Bike has been recycled the
+								{{operation.recycling.recyclingDate|date('Y-m-d')}}
+								<a class="btn show" href="{{path('recycling_show',{'id':operation.recycling.id})}}">
+									<i class="bi bi-info-square"></i>
+								</a>
+							</div>
+						{% endif %}
+
+					</td>
+				</tr>
+				<tr>
+					<th>Actions</th>
+					<td>
+						{% if operation.recycling != null %}
+							<div>This bike has been recycled</div>
+						{% elseif operation.repair != null %}
+							{% if operation.repair.validation == true %}
+								<div>Repair is finish</div>
+								{% if operation.billing != null %}
+									<div>This operation is finish and billed</div>
+								{% elseif operation.bikesStock != null %}
+									<div>Bike has been put in stock</div>
+								{% else %}
+									<div>
+										<a class="btn create" href="{{path('add_operator',{'id':operation.id})}}">
+											<i class="bi bi-plus-square">
+												Add operators</i>
+										</a>
+									</div>
+									<div>
+										<a class="btn create" href="{{path('add_billing',{'id':operation.id})}}">
+											<i class="bi bi-plus-square">
+												Billing</i>
+										</a>
+									</div>
+									<div>
+										<a class="btn create" href="{{path('add_bikes_stock',{'id':operation.id})}}">
+											<i class="bi bi-plus-square">
+												Add bike to stock</i>
+										</a>
+									</div>
+								{% endif %}
+
+							{% else %}
+								<div>This bike is on repair work</div>
+								<div>
+									<a class="btn create" href="{{path('add_operator',{'id':operation.id})}}">
+										<i class="bi bi-plus-square">
+											Add operators</i>
+									</a>
+								</div>
+								<div>
+									<a class="btn create" href="{{path('repair_validation',{'id':operation.repair.id})}}">
+										<i class="bi bi-plus-square">
+											Validate
+										</i>
+									</a>
+								</div>
+
+							{% endif %}
+						{% else %}
+							<div>
+
+								<a class="btn create" href="{{path('add_operator',{'id':operation.id})}}">
+									<i class="bi bi-plus-square">
+										Add operators</i>
+								</a>
+							</div>
+							<div>
+								<a class="btn create" href="{{path('add_repair',{'id':operation.id})}}">
+									<i class="bi bi-plus-square">
+										Add a repair work</i>
+								</a>
+							</div>
+							<div>
+								<a class="btn create" href="{{path('add_recycling',{'id':operation.id})}}">
+									<i class="bi bi-plus-square">
+										Add a recycling work</i>
+								</a>
+							</div>
+							<div>
+								<a class="btn create" href="{{path('add_billing',{'id':operation.id})}}">
+									<i class="bi bi-plus-square">
+										Billing</i>
+								</a>
+							</div>
+							<div>
+								<a class="btn create" href="{{path('add_bikes_stock',{'id':operation.id})}}">
+									<i class="bi bi-plus-square">
+										Add bike to stock</i>
+								</a>
+							</div>
+						{% endif %}
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="row">
+			<div class="col-sm">
+				<a class="btn create" href="{{ path('operation_index') }}">
+					<i class="bi bi-chevron-left">
+						Back to list</i>
+				</a>
+			</div>
+			{% if is_granted('ROLE_MANAGER') %}
+				<div class="col-sm">
+					{{ include('operation/_delete_form.html.twig') }}
+					<a class="btn edit" href="{{ path('operation_edit', {'id': operation.id}) }}">
+						<i class="bi bi-pencil">
+							Edit</i>
+					</a>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+
 {% endblock %}

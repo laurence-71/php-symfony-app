@@ -40,27 +40,27 @@
             <th>Operations</th>
                 <td>
                 {% for operation in bike.operations %}
-                <div class="row">
-                <div class='col-sm'>
+              
+                <div >
                 Bike has arrived on {{operation.receptionDate|date('Y-m-d H:i')}}
                </div>
-               <div class="col-sm">
+               {% if operation.recycling != null %}
+                  <div>Bike has been recycled the {{operation.recycling.recyclingDate|date('Y-m-d')}}</div>
+               {% else %}
+                 <div><a class="btn create" href="{{path('add_operation',{'id':bike.id})}}"><i class="bi bi-plus-square"> Add an operation</i></a></div>
+               {% endif %}
+               <div >
                 <a class="btn show" href="{{path('operation_show',{'id':operation.id})}}"><i class="bi bi-info-square"></i></a>
                 </div>
-              
-                     </div>
-                     
-              
+                {% else %}
+                 <div><a class="btn create" href="{{path('add_operation',{'id':bike.id})}}"><i class="bi bi-plus-square"> Add an operation</i></a></div>
                 {% endfor %}
-                <a class="btn create" href="{{path('add_operation',{'id':bike.id})}}"><i class="bi bi-plus-square"> Add an operation</i></a>
-              
-             
+
                 </td>
-               
-           
             </tr>
         </tbody>
     </table>
+   
 <div class="row">
 <div class="col-sm">
     <a class="btn create" href="{{ path('bike_index') }}"><i class="bi bi-chevron-left"> Back to list</i></a>
