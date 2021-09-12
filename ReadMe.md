@@ -1,5 +1,5 @@
  # PHP Symfony App
- This a general app that manage a bike repair shop from the source to the repair process and the recycling and stock process
+ This is an example of a general app that manage a bike repair shop from the source to the repair process, the recycling and the stock process
 
  This include 
  * an authentification from the start
@@ -25,8 +25,8 @@ cd nameofyourproject
 * Create a git repository
 ```bash
 git init
-git config --global user.name""
-git config --global user.email""
+git config --global user.name"username"
+git config --global user.email"useremail"
 ```
 * If you wish to run your tests you can install phpUnit
 ```bash
@@ -156,6 +156,7 @@ logout:
 * Make sure the route are set up correctly
 
 # Create a user profile to allow the change of password
+
 * In the entity User add the firstname and lastname if you want
 * In the UserController just return the view
 * Make the ProfileController
@@ -188,6 +189,7 @@ error403.html.twig
 https://127.0.0.1:8000/index.php/_error/404
 ```
 # Create the favicon
+
 * Get favicon generator for real
 * select your favicon image
 * Generate your favicon and html code to create the files and the links to make sure all the browsers and format will show it
@@ -200,3 +202,4 @@ https://127.0.0.1:8000/index.php/_error/404
 
 In Case you miss it.
 The app takes care of all the process of repair, recycling a bike, and the article requirements . In the admin I put the beginning of a statistic management with ChartJS ; I used version 2.9.3 instead of symfony/UX-chartJS . 
+Next to be done: retrievement of the password in email, more stats charts, the management of the bikes stocks, put those bikes on sell or rent
