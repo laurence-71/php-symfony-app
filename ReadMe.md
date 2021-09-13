@@ -1,16 +1,18 @@
  # PHP Symfony App
- This is an example of a general app that manage a bike repair shop from the source to the repair process, the recycling and the stock process
+
+ This is an example of a general app that could manage a bike repair shop from the source to the repair process, the recycling and the stock process
 
  This include 
  * an authentification from the start
  * a hierarchy for the access
  * the management of the repair process(register the source, the bikes, the operation you want to do, choose the article from the stocks(new or second-hand),estimate the price of the repair, edit a bill,...)
  * the customization of errors type 403,404 and 500 when the app is on prod
- * the example of the use of ChartJS to make some charts
+ * the example of the use of ChartJS to make some charts from the admin page
  * the print pages(billing and estimate)
  * the export of the file in CSV
 
  # Set Up
+
  * In the folder you want your project in, open a command prompt
 
 * Create the project with composer(make sure you've got it set allready, if not, check the download composer documentation)
@@ -44,6 +46,7 @@ symfony serve
 ```
 
 # Authentification Set Up
+
 * Create the user
 ```bash
 symfony console make:user
@@ -81,6 +84,7 @@ symfony console make:controller Security
 **Their respectives templates will be created automatically**
 
 # The forms
+
 * User form
 ```bash
 symfony console make:form
